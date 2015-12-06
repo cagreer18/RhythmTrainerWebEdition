@@ -20,24 +20,34 @@ function compareTracks() {
 	document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + tempSolutionTrack.length;
 }
 
-function start() {
-countdown = setInterval(beginCountdown, 1000);
+function start(){
+    countdown();
 }
 
-function beginCountdown() {
-	if(countdownTimer >= 0) {
-		document.getElementById("timeDIV").innerHTML = countdownTimer;
-		countdownTimer--;
-	} else if(countdownTimer < 0) {
-		startTime();
-    }	
+function countdown(){
+    var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
+        
+    var count = 5;
+    var timer = setInterval(
+        function(){
+            if(count > 0){
+                document.getElementById("timeDIV").innerHTML = count;
+                count--;
+                metronomeTrack.play();
+            } else {
+                clearInterval(timer);
+                metronomeTrack.pause();
+                playTrack();
+                document.getElementById("timeDIV").innerHTML = 0;
+            }
+        }, 1000);   
 }
 
-function startTime() {
-	var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
-	metronomeTrack.play();
-	clearInterval(countdown);
-	elapsed = setInterval(incrementTime, 500);
+function playTrack(){
+    document.getElementById("timeDIV").innerHTML = "";
+    var metronomeTrack = new Audio("audio/60bpmBoroqueGuitar.mp3");
+    metronomeTrack.play();
+    var playHead = setInterval(incrementTime, 1000);
 }
 
 function incrementTime() {
