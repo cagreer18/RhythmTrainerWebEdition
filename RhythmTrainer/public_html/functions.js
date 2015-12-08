@@ -1,6 +1,6 @@
 function isDone() {
 	checker = setInterval(function() {
-		if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length-1]) {
+		if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length-1] + 1) {
 			clearInterval(elapsed);
 			elapsed = 0; 
 			compareTracks();
@@ -9,6 +9,8 @@ function isDone() {
 	}, 500); 
 }
 
+var percentage;
+var letterGrade;
 function compareTracks() {
 	for(var i=0; i<=tempSolutionTrack.length-1; i++) {
 		for(var j=0; j<=userGeneratedTrack.length-1;j++){
@@ -17,7 +19,21 @@ function compareTracks() {
 			}
 		}
 	}
-	document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + tempSolutionTrack.length;
+        percentage = accurateHits/tempSolutionTrack.length;
+        if (percentage <= 0.6) {
+            letterGrade = 'F';
+        } else if (percentage <= .7) {
+            letterGrade = 'D';
+        } else if (percentage <= .8) {
+            letterGrade = 'C';
+        } else if (percentage <= .9) {
+            letterGrade = 'B';
+        } else if (percentage <= 1.0) {
+            letterGrade = 'A';
+        } else {
+            letterGrade = null;
+        }
+       document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + tempSolutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
 
 function start(){
@@ -104,9 +120,9 @@ var NotesEnum = {
 	TRIPLET_QUARTER_NOTE: 40000,
 	TRIPLET_EIGHTH_NOTE: 20000,
 	TRIPLET_SIXENTH_NOTE: 10000
-}
+};
 
-var userGeneratedTrack=[];
+var userGeneratedTrack = [];
 var WNote;
 var HNote;
 var QNote;
@@ -126,6 +142,6 @@ var accurateHits = 0;
 var countdown;
 var elapsed;
 var solutionTrack = [];
-var tempSolutionTrack = [0,2,4,6];
+var tempSolutionTrack = [1,2,3,4];
 var countdownTimer = 5;
 var elapsedTime = 0;
