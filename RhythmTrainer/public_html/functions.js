@@ -81,67 +81,53 @@ function showDiv() {
 }
 
 function Track(BPM) {
-	WNote = NotesEnum.WHOLE_NOTE / BPM;
-	QNote = NotesEnum.QUARTER_NOTE / BPM;
-	HNote = NotesEnum.HALF_NOTE / BPM;
-	ENote = NotesEnum.EIGHTH_NOTE / BPM;
-	SNote = NotesEnum.SIXTENTH_NOTE / BPM;
-	DHNote = NotesEnum.DOTED_HALF_NOTE / BPM;
-	DQNote = NotesEnum.DOTED_QUARTER_NOTE / BPM;
-	DENote = NotesEnum.DOTED_EIGHTH_NOTE / BPM;
-	DSNote = NotesEnum.DOTED_SIXTENTH_NOTE / BPM;
-	TQNote = NotesEnum.TRIPLET_QUARTER_NOTE / BPM;
-	TENote = NotesEnum.TRIPLET_EIGHTH_NOTE / BPM;
-	TSNote = NotesEnum.TRIPLET_SIXENTH_NOTE / BPM;
-}
-
-function generateSolutionTrack() {
-	Track(60);
-	var notes = [QNote,QNote,QNote,QNote];
-	for(i=0; i<notes.length; i++) {
+        this.BPM;
+        this.notes;
+        this.solutionTrack = []
+	this.WNote = 240000 / BPM;
+	this.QNote = 60000 / BPM;
+	this.HNote = 120000 / BPM;
+	this.ENote = 30000 / BPM;
+	this.SNote = 15000 / BPM;
+	this.DHNote = 180000 / BPM;
+	this.DQNote = 90000 / BPM;
+	this.DENote = 45000 / BPM;
+	this.DSNote = 225000 / BPM;
+	this.TQNote = 40000 / BPM;
+	this.TENote = 20000 / BPM;
+	this.TSNote = 10000 / BPM;
+        Track.prototype.generateSolutionTrack = function(){
+            for(i=0; i<this.notes.length; i++) {
 		if(i==0) {
-			solutionTrack[i] = notes[i];
+                       this.solutionTrack[i] = this.notes[i];
 		} else {
-			solutionTrack[i] = notes[i] + solutionTrack[i-1];
+			this.solutionTrack[i] = this.notes[i] + this.solutionTrack[i-1];
 		}
-	}
+                
+            }
+        return this.solutionTrack;
+        };
+        
+      
+        
+        
 }
 
-var NotesEnum = {
-	WHOLE_NOTE: 240000,
-	HALF_NOTE: 120000,
-	EIGHTH_NOTE: 30000,
-	QUARTER_NOTE: 60000,
-	SIXTENTH_NOTE: 15000,
-	DOTED_QUARTER_NOTE: 90000,
-	DOTED_HALF_NOTE: 180000,
-	DOTED_EIGHTH_NOTE: 45000,
-	DOTED_SIXTENTH_NOTE: 22500,
-	TRIPLET_QUARTER_NOTE: 40000,
-	TRIPLET_EIGHTH_NOTE: 20000,
-	TRIPLET_SIXENTH_NOTE: 10000
-};
+//example of creating a new Track object.
+var track1 = new Track(60);
+track1.notes = [track1.QNote,track1.QNote,track1.QNote, track1.QNote]
+track1.generateSolutionTrack();
 
+
+
+var notes;
 var userGeneratedTrack = [];
-var WNote;
-var HNote;
-var QNote;
-var ENote;
-var SNote;
-var DQNote;
-var DHNote;
-var DENote;
-var DENote;
-var DSNote;
-var TQNote;
-var TENote;
-var TSNote;
+
 var myTimer;
 var checker;
 var accurateHits = 0;
 var countdown;
 var elapsed;
-var solutionTrack = [];
 var tempSolutionTrack = [1,2,3,4];
 var countdownTimer = 5;
 var elapsedTime = 0;
