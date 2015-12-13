@@ -1,6 +1,6 @@
 function isDone() {
 	checker = setInterval(function() {
-		if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length-1] + 1) {
+		if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length - 1] + 1) {
 			clearInterval(elapsed);
 			elapsed = 0; 
 			compareTracks();
@@ -83,19 +83,20 @@ function showDiv() {
 function Track(BPM) {
         this.BPM;
         this.notes;
-        this.solutionTrack = []
-	this.WNote = 240000 / BPM;
-	this.QNote = 60000 / BPM;
-	this.HNote = 120000 / BPM;
-	this.ENote = 30000 / BPM;
-	this.SNote = 15000 / BPM;
-	this.DHNote = 180000 / BPM;
-	this.DQNote = 90000 / BPM;
-	this.DENote = 45000 / BPM;
-	this.DSNote = 225000 / BPM;
-	this.TQNote = 40000 / BPM;
-	this.TENote = 20000 / BPM;
-	this.TSNote = 10000 / BPM;
+        this.solutionTrack = [];
+	WNote = Notes.WHOLE_NOTE / BPM;
+	QNote = Notes.QUARTER_NOTE / BPM;
+	HNote = Notes.HALF_NOTE / BPM;
+	ENote = Notes.EIGHTH_NOTE / BPM;
+	SNote = Notes.SIXTENTH_NOTE / BPM;
+	DHNote = Notes.DOTED_HALF_NOTE / BPM;
+	DQNote = Notes.DOTED_QUARTER_NOTE / BPM;
+	DENote = Notes.DOTED_EIGHTH_NOTE / BPM;
+	DSNote = Notes.DOTED_SIXTENTH_NOTE / BPM;
+	TQNote = Notes.TRIPLET_QUARTER_NOTE / BPM;
+	TENote = Notes.TRIPLET_EIGHTH_NOTE / BPM;
+	TSNote = Notes.TRIPLET_SIXENTH_NOTE / BPM;
+        
         Track.prototype.generateSolutionTrack = function(){
             for(i=0; i<this.notes.length; i++) {
 		if(i==0) {
@@ -107,18 +108,27 @@ function Track(BPM) {
             }
         return this.solutionTrack;
         };
-        
-      
-        
-        
 }
+
+var Notes = {
+	WHOLE_NOTE: 240000,
+	HALF_NOTE: 120000,
+	EIGHTH_NOTE: 30000,
+	QUARTER_NOTE: 60000,
+	SIXTENTH_NOTE: 15000,
+	DOTED_QUARTER_NOTE: 90000,
+	DOTED_HALF_NOTE: 180000,
+	DOTED_EIGHTH_NOTE: 45000,
+	DOTED_SIXTENTH_NOTE: 22500,
+	TRIPLET_QUARTER_NOTE: 40000,
+	TRIPLET_EIGHTH_NOTE: 20000,
+	TRIPLET_SIXENTH_NOTE: 10000
+};
 
 //example of creating a new Track object.
 var track1 = new Track(60);
 track1.notes = [track1.QNote,track1.QNote,track1.QNote, track1.QNote]
 track1.generateSolutionTrack();
-
-
 
 var notes;
 var userGeneratedTrack = [];
