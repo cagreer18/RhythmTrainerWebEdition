@@ -1,12 +1,12 @@
 function isDone() {
-	checker = setInterval(function() {
-		if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length - 1] + 1) {
-			clearInterval(elapsed);
-			elapsed = 0; 
-			compareTracks();
-			clearInterval(checker);
-		}
-	}, 500); 
+    checker = setInterval(function() {
+        if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length - 1] + 1) {
+            clearInterval(elapsed);
+            elapsed = 0; 
+            compareTracks();
+            clearInterval(checker);
+	}
+    }, 500);
 }
 
 var percentage;
@@ -22,11 +22,11 @@ function compareTracks() {
         percentage = accurateHits/tempSolutionTrack.length;
         if (percentage <= 0.6) {
             letterGrade = 'F';
-        } else if (percentage <= .7) {
+        } else if (percentage <= 0.7) {
             letterGrade = 'D';
-        } else if (percentage <= .8) {
+        } else if (percentage <= 0.8) {
             letterGrade = 'C';
-        } else if (percentage <= .9) {
+        } else if (percentage <= 0.9) {
             letterGrade = 'B';
         } else if (percentage <= 1.0) {
             letterGrade = 'A';
@@ -37,6 +37,14 @@ function compareTracks() {
 }
 
 function start(){
+    for (var i = 0; i < 4; i++) {
+        var image = document.createElement("img");
+        image.setAttribute("src", "images/quarter_note.png");
+        image.setAttribute("width", 30);
+        image.setAttribute("height", 30);
+        var element = document.getElementById("trackDiv");
+        element.appendChild(image);
+    }
     countdown();
 }
 
