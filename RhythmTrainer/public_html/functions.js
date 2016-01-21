@@ -37,6 +37,7 @@ function compareTracks() {
 }
 
 function start(){
+    document.getElementById("startButton").disabled = true;
     for (var i = 0; i < 4; i++) {
         var image = document.createElement("img");
         image.setAttribute("src", "images/quarter_note.png");
@@ -50,25 +51,27 @@ function start(){
 
 function countdown(){
     var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
+    document.getElementById("countdown").style.display = "block";
         
     var count = 5;
     var timer = setInterval(
         function(){
             if(count > 0){
-                document.getElementById("timeDIV").innerHTML = count;
+                document.getElementById("countdown").innerHTML = count;
                 count--;
                 metronomeTrack.play();
             } else {
                 clearInterval(timer);
                 metronomeTrack.pause();
                 playTrack();
-                document.getElementById("timeDIV").innerHTML = 0;
+                document.getElementById("countdown").style.display = "none";
+                
             }
         }, 1000);   
 }
 
 function playTrack(){
-    document.getElementById("timeDIV").innerHTML = "";
+    document.getElementById("timestamp").innerHTML = "";
     var metronomeTrack = new Audio("audio/60bpmBoroqueGuitar.mp3");
     metronomeTrack.play();
     var playHead = setInterval(incrementTime, 1000);
@@ -84,7 +87,7 @@ function showDiv() {
 	userGeneratedTrack.push(elapsedTime);
 	para.appendChild(node);
 	
-	var element = document.getElementById("timeDIV");
+	var element = document.getElementById("timestamp");
 	element.appendChild(para);
 }
 
@@ -117,6 +120,8 @@ function Track(BPM) {
         return this.solutionTrack;
         };
 }
+
+
 
 var Notes = {
 	WHOLE_NOTE: 240000,

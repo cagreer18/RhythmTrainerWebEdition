@@ -4,6 +4,6 @@ function showDiv() {
 	userGeneratedTrack.push(elapsedTime);
 	para.appendChild(node);
 	
-	var element = document.getElementById("timeDIV");
+	var element = document.getElementById("timestamp");
 	element.appendChild(para);
 }

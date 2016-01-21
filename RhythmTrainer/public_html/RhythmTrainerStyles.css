@@ -1,0 +1,49 @@
+html, body {
+    height: 100%;
+}
+
+#countdown {
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    font-size: 33vw;
+}
+
+.button-game {
+    position: absolute;
+    display: inline-block;
+    bottom: 5px;
+    white-space: nowrap;
+    width: auto;
+    margin: 0 40vw 0;
+}
+
+.button-game button {
+    width: 10vw;
+    height: 5vh;
+    border: none;
+    background: #5539CC;
+    color: white;
+}
+
+#trackDiv {
+    text-align: center;
+}
+
+#timestamp {
+    border: 2px solid black;
+    height: 33vw;
+    overflow: scroll;
+}
+
+#wrap {
+    position: relative;
+    height: 100%;
+    max-width: 100%;
+    width: auto;
+}
+
+#wrap h1 {
+    text-align: center;
+    font-size: 4vw;
+}

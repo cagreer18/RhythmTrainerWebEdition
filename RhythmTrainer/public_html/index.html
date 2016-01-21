@@ -2,15 +2,20 @@
 <html>
     <head>
         <title>Rhythm Trainer</title>
-        <script src="functions.js">
-	</script>
+        <script src="functions.js"></script>
+        <link rel="stylesheet" type="text/css" href="RhythmTrainerStyles.css">
     </head>
     <body onload="isDone()">
-        <h1>Click the button</h1>
-        <div id="trackDiv"></div>
-        <input id="startButton" type="button" value="Start Timer" onclick="start()"/>
-	<input id="inputButton" type="button" value="Click Me" onclick="showDiv()"/>
-	<div id="timeDIV"></div>
-	<p id = "result"></p>
+        <div id="wrap">
+            <h1>Click the button</h1>
+            <div class="button-game">
+                <button id="startButton" onclick="start()">Start Timer</button>
+                <button id="inputButton" onclick="showDiv()">Click Me</button>
+            </div>
+            <div id="trackDiv"></div>
+            <div id="countdown"></div>
+            <div id="timestamp"></div>
+            <p id = "result"></p>
+        </div> <!-- END wrap -->
     </body>
 </html>

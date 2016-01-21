@@ -9,12 +9,12 @@ function countdown(){
     metronomeTrack.play();
     
     var count = 5;
-    document.getElementById("timeDIV").innerHTML = count;
+    document.getElementById("countdown").innerHTML = count;
    
     var timer = setInterval(
         function(){
             if(count > 0){
-                document.getElementById("timeDIV").innerHTML = count;
+                document.getElementById("countdown").innerHTML = count;
                 count--;
             } else {
                 clearInterval(timer);
