@@ -15,7 +15,7 @@ function compareTracks() {
     for(var i = 0; i<=userGeneratedTrack.length-1; i++)
     {
         userGeneratedTrack[i] = userGeneratedTrack[i] - 200;
-        alert(userGeneratedTrack[i]);
+       
     }
 	for(var i=0; i<=tempSolutionTrack.length-1; i++) {
 		for(var j=0; j<=userGeneratedTrack.length-1;j++){
