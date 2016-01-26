@@ -1,20 +1,25 @@
 function isDone() {
     checker = setInterval(function() {
-        if (elapsedTime == tempSolutionTrack[tempSolutionTrack.length - 1] + 1) {
+        if (elapsed - 300 > tempSolutionTrack[tempSolutionTrack.length - 1] + 1) {
             clearInterval(elapsed);
             elapsed = 0; 
             compareTracks();
             clearInterval(checker);
 	}
-    }, 500);
+    }, 1);
 }
 
 var percentage;
 var letterGrade;
 function compareTracks() {
+    for(var i = 0; i<=userGeneratedTrack.length-1; i++)
+    {
+        userGeneratedTrack[i] = userGeneratedTrack[i] - 200;
+        alert(userGeneratedTrack[i]);
+    }
 	for(var i=0; i<=tempSolutionTrack.length-1; i++) {
 		for(var j=0; j<=userGeneratedTrack.length-1;j++){
-			if (tempSolutionTrack[i] == userGeneratedTrack[j]){
+			if ((tempSolutionTrack[i] >= userGeneratedTrack[j] - 200)&&(tempSolutionTrack[i] <= userGeneratedTrack[j]+200)){
 				accurateHits++;
 			}
 		}
@@ -62,7 +67,7 @@ function countdown(){
                 metronomeTrack.play();
             } else {
                 clearInterval(timer);
-                metronomeTrack.pause();
+               // metronomeTrack.pause();
                 playTrack();
                 document.getElementById("countdown").style.display = "none";
                 
@@ -72,19 +77,34 @@ function countdown(){
 
 function playTrack(){
     document.getElementById("timestamp").innerHTML = "";
-    var metronomeTrack = new Audio("audio/60bpmBoroqueGuitar.mp3");
-    metronomeTrack.play();
-    var playHead = setInterval(incrementTime, 1000);
+   // var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
+   // metronomeTrack.play();
+    accurateTimer();
 }
 
 function incrementTime() {
 	 elapsedTime++;	 
 }
+function accurateTimer(){
+var start = new Date().getTime();
+    elapsed = '0.0';
+
+window.setInterval(function()
+{
+    var time = new Date().getTime() - start;
+
+    elapsed = Math.floor(time);
+    
+
+    document.title = elapsed;
+    
+}, 10);
+}
 
 function showDiv() {
 	var para = document.createElement("p");
-	var node = document.createTextNode(elapsedTime);
-	userGeneratedTrack.push(elapsedTime);
+	var node = document.createTextNode(elapsed);
+	userGeneratedTrack.push(elapsed);
 	para.appendChild(node);
 	
 	var element = document.getElementById("timestamp");
@@ -151,6 +171,6 @@ var checker;
 var accurateHits = 0;
 var countdown;
 var elapsed;
-var tempSolutionTrack = [1,2,3,4];
+var tempSolutionTrack = [1000,2000,2250,2500,3000,4000];
 var countdownTimer = 5;
 var elapsedTime = 0;
