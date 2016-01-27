@@ -14,14 +14,20 @@ var letterGrade;
 function compareTracks() {
     for(var i = 0; i<=userGeneratedTrack.length-1; i++)
     {
-        userGeneratedTrack[i] = userGeneratedTrack[i] - 200;
+        userGeneratedTrack[i] = userGeneratedTrack[i];
+        
        
     }
+    var count = 0;
 	for(var i=0; i<=tempSolutionTrack.length-1; i++) {
-		for(var j=0; j<=userGeneratedTrack.length-1;j++){
+		for(var j=count; j<=userGeneratedTrack.length-1;j++){
 			if ((tempSolutionTrack[i] >= userGeneratedTrack[j] - 200)&&(tempSolutionTrack[i] <= userGeneratedTrack[j]+200)){
 				accurateHits++;
+                                count = j+1;
+                                
+                                break;
 			}
+                        
 		}
 	}
         percentage = accurateHits/tempSolutionTrack.length;
@@ -174,3 +180,9 @@ var elapsed;
 var tempSolutionTrack = [1000,2000,2250,2500,3000,4000];
 var countdownTimer = 5;
 var elapsedTime = 0;
+
+window.addEventListener('keydown',function(event){
+    if(event.keyCode === 32){
+        showDiv();
+    }
+    },false);
