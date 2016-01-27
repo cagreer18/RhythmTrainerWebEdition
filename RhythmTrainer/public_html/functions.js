@@ -4,6 +4,7 @@ function isDone() {
             clearInterval(elapsed);
             elapsed = 0; 
             compareTracks();
+            toggleResultPopup();
             clearInterval(checker);
 	}
     }, 1);
@@ -73,7 +74,6 @@ function countdown(){
                 metronomeTrack.play();
             } else {
                 clearInterval(timer);
-               // metronomeTrack.pause();
                 playTrack();
                 document.getElementById("countdown").style.display = "none";
                 
@@ -83,8 +83,6 @@ function countdown(){
 
 function playTrack(){
     document.getElementById("timestamp").innerHTML = "";
-   // var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
-   // metronomeTrack.play();
     accurateTimer();
 }
 
@@ -117,6 +115,11 @@ function showDiv() {
 	element.appendChild(para);
 }
 
+function toggleResultPopup() {
+    element = document.getElementById("overlay");
+    element.style.visibility = (element.style.visibility == "visible") ? "hidden" : "visible";
+}
+
 function Track(BPM) {
         this.BPM;
         this.notes;
@@ -136,7 +139,7 @@ function Track(BPM) {
         
         Track.prototype.generateSolutionTrack = function(){
             for(i=0; i<this.notes.length; i++) {
-		if(i==0) {
+		if(i===0) {
                        this.solutionTrack[i] = this.notes[i];
 		} else {
 			this.solutionTrack[i] = this.notes[i] + this.solutionTrack[i-1];
@@ -166,7 +169,7 @@ var Notes = {
 
 //example of creating a new Track object.
 var track1 = new Track(60);
-track1.notes = [track1.QNote,track1.QNote,track1.QNote, track1.QNote]
+track1.notes = [track1.QNote,track1.QNote,track1.QNote, track1.QNote];
 track1.generateSolutionTrack();
 
 var notes;
