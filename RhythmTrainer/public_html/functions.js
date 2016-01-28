@@ -49,7 +49,6 @@ function compareTracks() {
 }
 
 function start(){
-    document.getElementById("startButton").disabled = true;
     for (var i = 0; i < 4; i++) {
         var image = document.createElement("img");
         image.setAttribute("src", "images/quarter_note.png");
@@ -105,7 +104,7 @@ window.setInterval(function()
 }, 10);
 }
 
-function showDiv() {
+function appendToDiv() {
 	var para = document.createElement("p");
 	var node = document.createTextNode(elapsed);
 	userGeneratedTrack.push(elapsed);
@@ -186,6 +185,18 @@ var elapsedTime = 0;
 
 window.addEventListener('keydown',function(event){
     if(event.keyCode === 32){
-        showDiv();
+        appendToDiv();
     }
-    },false);
+},false);
+    
+    
+var trackStarted = false;
+function actionPerformed(){
+    if(trackStarted === false){
+        start();
+        trackStarted = true;
+        document.getElementById("actionButton").textContent = "Click Me";
+    } else if(trackStarted === true){
+        appendToDiv();
+    }
+}
