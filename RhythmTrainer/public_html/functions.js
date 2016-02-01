@@ -1,6 +1,23 @@
+
+
+
+var Notes = {
+	WHOLE_NOTE: 240000,
+	HALF_NOTE: 120000,
+	EIGHTH_NOTE: 30000,
+	QUARTER_NOTE: 60000,
+	SIXTENTH_NOTE: 15000,
+	DOTED_QUARTER_NOTE: 90000,
+	DOTED_HALF_NOTE: 180000,
+	DOTED_EIGHTH_NOTE: 45000,
+	DOTED_SIXTENTH_NOTE: 22500,
+	TRIPLET_QUARTER_NOTE: 40000,
+	TRIPLET_EIGHTH_NOTE: 20000,
+	TRIPLET_SIXENTH_NOTE: 10000
+};
 function isDone() {
     checker = setInterval(function() {
-        if (elapsed - 300 > tempSolutionTrack[tempSolutionTrack.length - 1] + 1) {
+        if (elapsed - 300 > track1.solutionTrack[track1.solutionTrack.length - 1] + 1) {
             clearInterval(elapsed);
             elapsed = 0; 
             compareTracks();
@@ -10,19 +27,24 @@ function isDone() {
     }, 1);
 }
 
+
+
+
 var percentage;
 var letterGrade;
 function compareTracks() {
     for(var i = 0; i<=userGeneratedTrack.length-1; i++)
     {
-        userGeneratedTrack[i] = userGeneratedTrack[i];
-        
+        userGeneratedTrack[i] = userGeneratedTrack[i] - 150;
+     
+
        
     }
+    
     var count = 0;
-	for(var i=0; i<=tempSolutionTrack.length-1; i++) {
+	for(var i=0; i<=track1.solutionTrack.length-1; i++) {
 		for(var j=count; j<=userGeneratedTrack.length-1;j++){
-			if ((tempSolutionTrack[i] >= userGeneratedTrack[j] - 200)&&(tempSolutionTrack[i] <= userGeneratedTrack[j]+200)){
+			if ((track1.solutionTrack[i] >= userGeneratedTrack[j] - 200)&&(track1.solutionTrack[i] <= userGeneratedTrack[j]+200)){
 				accurateHits++;
                                 count = j+1;
                                 
@@ -31,7 +53,7 @@ function compareTracks() {
                         
 		}
 	}
-        percentage = accurateHits/tempSolutionTrack.length;
+        percentage = accurateHits/track1.solutionTrack.length;
         if (percentage <= 0.6) {
             letterGrade = 'F';
         } else if (percentage <= 0.7) {
@@ -45,7 +67,7 @@ function compareTracks() {
         } else {
             letterGrade = null;
         }
-       document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + tempSolutionTrack.length + "\nThat's a(n): " + letterGrade;
+       document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + track1.solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
 
 function start(){
@@ -118,31 +140,29 @@ function toggleResultPopup() {
     element = document.getElementById("overlay");
     element.style.visibility = (element.style.visibility == "visible") ? "hidden" : "visible";
 }
-
 function Track(BPM) {
         this.BPM;
         this.notes;
         this.solutionTrack = [];
-	WNote = Notes.WHOLE_NOTE / BPM;
-	QNote = Notes.QUARTER_NOTE / BPM;
-	HNote = Notes.HALF_NOTE / BPM;
-	ENote = Notes.EIGHTH_NOTE / BPM;
-	SNote = Notes.SIXTENTH_NOTE / BPM;
-	DHNote = Notes.DOTED_HALF_NOTE / BPM;
-	DQNote = Notes.DOTED_QUARTER_NOTE / BPM;
-	DENote = Notes.DOTED_EIGHTH_NOTE / BPM;
-	DSNote = Notes.DOTED_SIXTENTH_NOTE / BPM;
-	TQNote = Notes.TRIPLET_QUARTER_NOTE / BPM;
-	TENote = Notes.TRIPLET_EIGHTH_NOTE / BPM;
-	TSNote = Notes.TRIPLET_SIXENTH_NOTE / BPM;
+	this.WNote = Notes.WHOLE_NOTE / BPM;
+	this.QNote = Notes.QUARTER_NOTE / BPM;
+	this.HNote = Notes.HALF_NOTE / BPM;
+	this.ENote = Notes.EIGHTH_NOTE / BPM;
+	this.SNote = Notes.SIXTENTH_NOTE / BPM;
+	this.DHNote = Notes.DOTED_HALF_NOTE / BPM;
+	this.DQNote = Notes.DOTED_QUARTER_NOTE / BPM;
+	this.DENote = Notes.DOTED_EIGHTH_NOTE / BPM;
+	this.DSNote = Notes.DOTED_SIXTENTH_NOTE / BPM;
+	this.TQNote = Notes.TRIPLET_QUARTER_NOTE / BPM;
+	this.TENote = Notes.TRIPLET_EIGHTH_NOTE / BPM;
+	this.TSNote = Notes.TRIPLET_SIXENTH_NOTE / BPM;
         
         Track.prototype.generateSolutionTrack = function(){
-            for(i=0; i<this.notes.length; i++) {
-		if(i===0) {
-                       this.solutionTrack[i] = this.notes[i];
-		} else {
-			this.solutionTrack[i] = this.notes[i] + this.solutionTrack[i-1];
-		}
+            for(i=0; i<this.notes.length-1; i++) {
+                this.solutionTrack[0] = 0;
+		
+			this.solutionTrack[i+1] = this.solutionTrack[i] + this.notes[i];
+		
                 
             }
         return this.solutionTrack;
@@ -151,25 +171,6 @@ function Track(BPM) {
 
 
 
-var Notes = {
-	WHOLE_NOTE: 240000,
-	HALF_NOTE: 120000,
-	EIGHTH_NOTE: 30000,
-	QUARTER_NOTE: 60000,
-	SIXTENTH_NOTE: 15000,
-	DOTED_QUARTER_NOTE: 90000,
-	DOTED_HALF_NOTE: 180000,
-	DOTED_EIGHTH_NOTE: 45000,
-	DOTED_SIXTENTH_NOTE: 22500,
-	TRIPLET_QUARTER_NOTE: 40000,
-	TRIPLET_EIGHTH_NOTE: 20000,
-	TRIPLET_SIXENTH_NOTE: 10000
-};
-
-//example of creating a new Track object.
-var track1 = new Track(60);
-track1.notes = [track1.QNote,track1.QNote,track1.QNote, track1.QNote];
-track1.generateSolutionTrack();
 
 var notes;
 var userGeneratedTrack = [];
@@ -182,6 +183,9 @@ var elapsed;
 var tempSolutionTrack = [1000,2000,2250,2500,3000,4000];
 var countdownTimer = 5;
 var elapsedTime = 0;
+var track1 = new Track(60);
+track1.notes = [track1.QNote,track1.SNote,track1.SNote, track1.ENote, track1.QNote, track1.QNote];
+track1.generateSolutionTrack();
 
 window.addEventListener('keydown',function(event){
     if(event.keyCode === 32){
