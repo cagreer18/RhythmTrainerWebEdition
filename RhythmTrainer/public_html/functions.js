@@ -22,7 +22,10 @@ function isDone() {
             elapsed = 0; 
             compareTracks();
             toggleResultPopup();
+            trackEnded = true;
             clearInterval(checker);
+            metronomeTrack.pause();
+            
 	}
     }, 1);
 }
@@ -82,8 +85,9 @@ function start(){
     countdown();
 }
 
+var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 function countdown(){
-    var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
+    
     document.getElementById("countdown").style.display = "block";
         
     var count = 5;
@@ -188,19 +192,26 @@ track1.notes = [track1.QNote,track1.SNote,track1.SNote, track1.ENote, track1.QNo
 track1.generateSolutionTrack();
 
 window.addEventListener('keydown',function(event){
-    if(event.keyCode === 32){
+    if (trackEnded == true){
+        
+    }else if(trackStarted == true && event.keyCode == 32){
         appendToDiv();
     }
 },false);
     
     
 var trackStarted = false;
+var trackEnded = false;
 function actionPerformed(){
-    if(trackStarted === false){
+    if(trackEnded == true){
+        
+        document.getElementById("actionButton").disable;
+    }else if(trackStarted == false){
         start();
         trackStarted = true;
+        
         document.getElementById("actionButton").textContent = "Click Me";
-    } else if(trackStarted === true){
+    } else if(trackStarted == true){
         appendToDiv();
-    }
+    } 
 }
