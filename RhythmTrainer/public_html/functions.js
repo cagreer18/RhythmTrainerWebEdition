@@ -1,6 +1,3 @@
-
-
-
 var Notes = {
 	WHOLE_NOTE: 240000,
 	HALF_NOTE: 120000,
@@ -15,6 +12,7 @@ var Notes = {
 	TRIPLET_EIGHTH_NOTE: 20000,
 	TRIPLET_SIXENTH_NOTE: 10000
 };
+
 function isDone() {
     checker = setInterval(function() {
         if (elapsed - 300 > track1.solutionTrack[track1.solutionTrack.length - 1] + 1) {
@@ -30,18 +28,12 @@ function isDone() {
     }, 1);
 }
 
-
-
-
 var percentage;
 var letterGrade;
 function compareTracks() {
     for(var i = 0; i<=userGeneratedTrack.length-1; i++)
     {
-        userGeneratedTrack[i] = userGeneratedTrack[i] - 150;
-     
-
-       
+        userGeneratedTrack[i] = userGeneratedTrack[i] - 150; 
     }
     
     var count = 0;
@@ -74,22 +66,64 @@ function compareTracks() {
 }
 
 function start(){
-    for (var i = 0; i < 4; i++) {
-        var image = document.createElement("img");
-        image.setAttribute("src", "images/quarter_note.png");
-        image.setAttribute("width", 30);
-        image.setAttribute("height", 30);
+    for (var i = 0; i < track1.notes.length; i++) {
+        tempNote = track1.notes[i];
+        var para = document.createElement("p");
+        para.setAttribute("class", "notes");
+        var text;
+        switch(tempNote) {
+            case track1.QNote:
+                text = document.createTextNode("q");
+                para.appendChild(text);
+                break;
+            case track1.HNote:
+                text = document.createTextNode("h");
+                para.appendChild(text);
+                break;
+            case track1.WNote:  
+                text = document.createTextNode("w");
+                para.appendChild(text);
+                break;
+            case track1.ENote:
+                text = document.createTextNode("e");
+                para.appendChild(text);
+                break;
+            case track1.DENote:
+                text = document.createTextNode("d");
+                para.appendChild(text);
+                break;
+            case track1.DQNote:
+                text = document.createTextNode("j");
+                para.appendChild(text);
+                break;
+            case track1.DENote:
+                text = document.createTextNode("i");
+                para.appendChild(text);
+                break;
+            case track1.TQNote:
+                text = document.createTextNode("t");
+                para.appendChild(text);
+                break;
+            case track1.TENote:
+                text = document.createTextNode("T");
+                para.appendChild(text);
+                break;
+            case track1.SNote:
+                text = document.createTextNode("s");
+                para.appendChild(text);
+                break;
+            default:
+                break;
+        }
         var element = document.getElementById("trackDiv");
-        element.appendChild(image);
+        element.appendChild(para);
     }
     countdown();
 }
 
 var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 function countdown(){
-    
     document.getElementById("countdown").style.display = "block";
-        
     var count = 5;
     var timer = setInterval(
         function(){
@@ -101,7 +135,6 @@ function countdown(){
                 clearInterval(timer);
                 playTrack();
                 document.getElementById("countdown").style.display = "none";
-                
             }
         }, 1000);   
 }
@@ -188,7 +221,7 @@ var tempSolutionTrack = [1000,2000,2250,2500,3000,4000];
 var countdownTimer = 5;
 var elapsedTime = 0;
 var track1 = new Track(60);
-track1.notes = [track1.QNote,track1.SNote,track1.SNote, track1.ENote, track1.QNote, track1.QNote];
+track1.notes = [track1.QNote, track1.HNote, track1.QNote, track1.QNote, track1.HNote, track1.QNote];
 track1.generateSolutionTrack();
 
 window.addEventListener('keydown',function(event){

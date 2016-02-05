@@ -80,3 +80,13 @@ html, body {
     font-size: 210%;
 }
 
+.notes {
+    font-family: Notes;
+    display: inline;
+    font-size: 45px;
+}
+
+@font-face {
+    font-family: Notes;
+    src: url(fonts/MusiSync.ttf);
+}
