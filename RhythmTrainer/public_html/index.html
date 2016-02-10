@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Rhythm Trainer</title>
-        <script src="functions.js"></script>
-        <link rel="stylesheet" type="text/css" href="RhythmTrainerStyles.css">
-    </head>
-    <body onload="isDone()">
-        <div id="wrap">
-            <h1>Click the button</h1>
-            <div class="button-game">
-                <button id="actionButton" onclick="actionPerformed()">Start Timer</button>
-            </div>
-            <div id="trackDiv"></div>
-            <div id="countdown"></div>
-            <div id="timestamp"></div>
-            <div class="overlay" id="overlay">
-                <div id = "result-popup">
-                    <h1>Your Results</h1>
-                    <p id="result"></p>
-                    <button class="resultsButtons" id="OKButton" onclick="toggleResultPopup()">OK</button> 
-                </div>
-            </div>
-        </div> <!-- END wrap -->
-    </body>
+
+  <head>
+    <title>Rhythm Trainer</title>
+    <script src="functions.js"></script>
+    <link rel="stylesheet" type="text/css" href="RhythmTrainerStyles.css">
+  </head>
+
+  <body onload="isTrackDone()">
+    <div id="wrap">
+      <h1>Click the button</h1>
+      <div class="button-game">
+        <button id="actionButton" onclick="changeActionButtonState()">Start Timer</button>
+      </div>
+      <div id="trackDiv"></div>
+      <div id="countdown"></div>
+      <div id="timestamp"></div>
+      <div class="overlay" id="overlay">
+        <div id="result-popup">
+          <h1>Your Results</h1>
+          <p id="result"></p>
+          <button id="OKButton" onclick="toggleResultPopup()">OK</button>
+        </div>
+      </div>
+    </div>
+    <!-- END wrap -->
+  </body>
+
 </html>
