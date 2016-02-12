@@ -21,6 +21,7 @@ function isTrackDone() {
             compareTracks();
             toggleResultPopup();
             clearInterval(checker);
+            trackEnded = true;
             metronomeTrack.pause();
         }
     }, 1);
@@ -30,20 +31,20 @@ var percentage;
 var letterGrade;
 
 function compareTracks() {
-    for (var i = 0; i <= userGeneratedTrack.length - 1; i++) {
-        userGeneratedTrack[i] = userGeneratedTrack[i] - 150;
+    for (var i = 0; i <= userInput.length - 1; i++) {
+        userInput[i] = userInput[i] - 150;
     }
     for (var x = 0; x < rests.length; x++) {
         var start = rests[x];
         var finish = rests[x] + rests[x + 1];
-        var sub = false;
-        for (var j = 0; j <= userGeneratedTrack.length - 1; j++) {
-            if (start <= userGeneratedTrack[j] && finish >= userGeneratedTrack[j] && !sub) {
+        var hasCount = false;
+        for (var j = 0; j <= userInput.length - 1; j++) {
+            if (start <= userInput[j] && userInput[j] <= finish && !hasCount) {
 
-                sub = true;
+                hasCount = true;
             }
         }
-        if (!sub) {
+        if (!hasCount) {
             accurateHits++;
         }
         x++;
@@ -51,29 +52,32 @@ function compareTracks() {
 
     for (var i = 0; i < notes.length; i++) {
         var count = 0;
-        for (var j = count; j <= userGeneratedTrack.length - 1; j++) {
-            if ((notes[i] >= userGeneratedTrack[j] - 200) && (notes[i] <= userGeneratedTrack[j] + 200)) {
-                accurateHits++;
+        var hasCounted = false;
+        for (var j = count; j <= userInput.length - 1; j++) {
+            if ((notes[i] >= userInput[j] - 200) && (notes[i] <= userInput[j] + 200 && !hasCounted)) {
+                hasCounted = true;
                 count = j + 1;
             }
         }
-
-        percentage = accurateHits / solutionTrack.length;
-        if (percentage <= 0.6) {
-            letterGrade = 'F';
-        } else if (percentage <= 0.7) {
-            letterGrade = 'D';
-        } else if (percentage <= 0.8) {
-            letterGrade = 'C';
-        } else if (percentage <= 0.9) {
-            letterGrade = 'B';
-        } else if (percentage <= 1.0) {
-            letterGrade = 'A';
-        } else {
-            letterGrade = null;
+        if (hasCounted) {
+            accurateHits++;
         }
-        document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
     }
+    percentage = accurateHits / solutionTrack.length;
+    if (percentage <= 0.6) {
+        letterGrade = 'F';
+    } else if (percentage <= 0.7) {
+        letterGrade = 'D';
+    } else if (percentage <= 0.8) {
+        letterGrade = 'C';
+    } else if (percentage <= 0.9) {
+        letterGrade = 'B';
+    } else if (percentage <= 1.0) {
+        letterGrade = 'A';
+    } else {
+        letterGrade = null;
+    }
+    document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
 
 function start() {
@@ -95,6 +99,7 @@ function start() {
         var element = document.getElementById("trackDiv");
         element.appendChild(para);
     }
+
     countdown();
 }
 
@@ -109,9 +114,11 @@ function countdown() {
                     document.getElementById("countdown").innerHTML = count;
                     count--;
                     metronomeTrack.play();
+
                 } else {
                     clearInterval(timer);
                     playTrack();
+                    document.getElementById("actionButton").disabled = false;
                     document.getElementById("countdown").style.display = "none";
                 }
             }, 1000);
@@ -140,7 +147,7 @@ function accurateTimer() {
 function appendToDiv() {
     var para = document.createElement("p");
     var node = document.createTextNode(elapsed);
-    userGeneratedTrack.push(elapsed);
+    userInput.push(elapsed);
     para.appendChild(node);
 
     var element = document.getElementById("timestamp");
@@ -196,7 +203,7 @@ function generateRhythmSheet(solutionTrack) {
     }
 }
 
-var userGeneratedTrack = [];
+var userInput = [];
 var checker;
 var accurateHits = 0;
 var countdown;
@@ -206,15 +213,16 @@ var elapsedTime = 0;
 generateRhythmSheet(solutionTrack);
 
 var trackStarted = false;
+var trackEnded = false;
 function changeActionButtonState() {
-    if (!trackStarted) {
+    if (trackEnded) {
+        document.getElementById("actionButton").disabled = true;
+    } else if (!trackStarted) {
         start();
+        document.getElementById("actionButton").disabled = true;
         trackStarted = true;
         document.getElementById("actionButton").textContent = "Click Me";
     } else if (trackStarted) {
         appendToDiv();
-        if (!trackStarted) {
-            document.getElementById("actionButton").disable;
-        }
     }
 }
