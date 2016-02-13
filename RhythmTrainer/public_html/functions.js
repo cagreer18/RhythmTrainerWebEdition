@@ -79,22 +79,98 @@ function compareTracks() {
     }
     document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
+var para = document.createElement("p");
+para.setAttribute("class", "notes");
+var text;
+function checkNote(duration, type) {
 
+    if (duration == 4000)
+    {
+        if (type == "rest") {
+            text = document.createTextNode("W");
+
+        } else if (type == "note") {
+            text = document.createTextNode("w");
+
+        }
+    } else if (duration == 1000) {
+        if (type == "rest") {
+            text = document.createTextNode("Q");
+
+        } else if (type == "note") {
+            text = document.createTextNode("q");
+
+        }
+    } else if (duration == 500) {
+        if (type == "rest") {
+            text = document.createTextNode("E");
+
+        } else if (type == "note") {
+            text = document.createTextNode("e");
+
+        }
+    } else if (duration == 250) {
+        if (type == "rest") {
+            text = document.createTextNode("S");
+
+        } else if (type == "note") {
+            text = document.createTextNode("s");
+        }
+    } else if (duration == 3000)
+    {
+        if (type == "rest") {
+            text = document.createTextNode("D");
+
+        } else if (type == "note") {
+            text = document.createTextNode("d");
+        }
+
+
+    }
+
+    para.appendChild(text);
+
+}
+function checkTieOver(tempNote, countedBeat)
+{
+    var remainder;
+    var otherRemainder;
+
+    if (countedBeat + tempNote.duration > 4000)
+    {
+        remainder = countedBeat + tempNote.duration - 4000;
+        otherRemainder = tempNote.duration - remainder;
+        checkNote(otherRemainder, tempNote.type);
+        text = document.createTextNode("V");
+        checkNote(remainder, tempNote.type);
+
+
+
+    } else {
+        checkNote(tempNote.duration, tempNote.type);
+        if (countedBeat >= 4000) {
+            text = document.createTextNode("'");
+            para.appendChild(text);
+            countedBeat = 0;
+        }
+    }
+
+}
 function start() {
+    var countedBeat = 0;
+
     for (var i = 0; i < solutionTrack.length; i++) {
         tempNote = solutionTrack[i];
-        var para = document.createElement("p");
-        para.setAttribute("class", "notes");
-        var text;
-        if (tempNote.duration == 1000) {
-            if (tempNote.type == "rest") {
-                text = document.createTextNode("Q");
-                para.appendChild(text);
-            } else if (tempNote.type == "note") {
-                text = document.createTextNode("q");
-                para.appendChild(text);
-            }
-        }
+
+
+
+        countedBeat += solutionTrack[i].duration;
+        checkTieOver(tempNote, countedBeat);
+
+
+
+
+
 
         var element = document.getElementById("trackDiv");
         element.appendChild(para);
@@ -172,7 +248,7 @@ var tqRest = {duration: 667, type: "rest"};
 var teRest = {duration: 333, type: "rest"};
 var tsRest = {duration: 167, type: "rest"};
 
-var wNote = {duration: 4000, type: "note"};
+var wNote = {duration: 4000, type: "note", key: "w"};
 var hNote = {duration: 2000, type: "note"};
 var qNote = {duration: 1000, type: "note"};
 var eNote = {duration: 500, type: "note"};
@@ -187,7 +263,7 @@ var tsNote = {duration: 167, type: "note"};
 
 var notes = [];
 var rests = [];
-var solutionTrack = [qNote, qRest, qNote, qRest];
+var solutionTrack = [qNote, wNote];
 var rhythmSheet = [];
 
 function generateRhythmSheet(solutionTrack) {
@@ -202,7 +278,13 @@ function generateRhythmSheet(solutionTrack) {
         }
     }
 }
+window.addEventListener('keydown', function (event) {
+    if (trackEnded == true) {
 
+    } else if (trackStarted == true && event.keyCode == 32) {
+        appendToDiv();
+    }
+}, false);
 var userInput = [];
 var checker;
 var accurateHits = 0;
@@ -211,7 +293,6 @@ var elapsed;
 var countdownTimer = 5;
 var elapsedTime = 0;
 generateRhythmSheet(solutionTrack);
-
 var trackStarted = false;
 var trackEnded = false;
 function changeActionButtonState() {
