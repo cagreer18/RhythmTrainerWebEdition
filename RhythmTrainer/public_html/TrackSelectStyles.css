@@ -1,0 +1,27 @@
+
+.trackList{
+    margin:auto;
+    border-radius: 25px;
+    background-color:#8038BA;
+    color: #C2D5DE;
+
+}
+
+.trackList a {
+    display: block;
+    padding: 25px;
+}
+
+@media screen and (min-width:   700px){
+    .trackList{
+        width:400px;
+        border-radius: 25px;
+        background-color:#8038BA;
+        color: #C2D5DE;
+    }
+
+    .trackList a {
+        display: block;
+        padding: 25px;
+    } 
+}

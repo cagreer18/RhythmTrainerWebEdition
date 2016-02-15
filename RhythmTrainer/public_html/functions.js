@@ -172,7 +172,7 @@ function start() {
 
 
 
-        var element = document.getElementById("trackDiv");
+        var element = document.getElementById("solutionTrackDisplay");
         element.appendChild(para);
     }
 
@@ -263,7 +263,7 @@ var tsNote = {duration: 167, type: "note"};
 
 var notes = [];
 var rests = [];
-var solutionTrack = [qNote, wNote];
+var solutionTrack = [qNote,qRest,qNote,qRest];
 var rhythmSheet = [];
 
 function generateRhythmSheet(solutionTrack) {

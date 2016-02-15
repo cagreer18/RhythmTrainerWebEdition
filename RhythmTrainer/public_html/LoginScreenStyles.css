@@ -1,0 +1,34 @@
+body{
+  background-color:#4A3CA3;
+}
+
+div{
+    padding:5px;
+    background-color:#AD3EB0;
+    border-radius: 25px;
+}
+
+.inputfield{
+    top-margin:5px;
+    margin:5px auto;
+    display:block;
+    background-color:#667DBA;
+    color:#C2D5DE;  
+}
+
+::-webkit-input-placeholder { /* Chrome */
+  color:#C2D5DE;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color:#C2D5DE;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color:#C2D5DE;
+  opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+  color:#C2D5DE;
+  opacity: 1;
+}
+
+
