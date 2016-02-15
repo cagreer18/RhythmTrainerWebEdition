@@ -9,10 +9,11 @@
 
     <body onload="isTrackDone()">
 
-        <button id="actionButton" onclick="changeActionButtonState()">Start Timer</button>
+        
         <div id="solutionTrackDisplay"></div>
-        <div id="countdown"></div>
-        <div id="timestamp"></div>
+        <div id="timestamp">
+            <div id="countdown"></div>
+        </div>
         <div class="overlay" id="overlay">
             <div id="result-popup">
                 <h1>Your Results</h1>
@@ -20,6 +21,7 @@
                 <button id="OKButton" onclick="toggleResultPopup()">Ok</button>
             </div>
         </div>
+        <button id="actionButton" onclick="changeActionButtonState()">Start Timer</button>
     </body>
 
 </html>

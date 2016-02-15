@@ -182,7 +182,7 @@ function start() {
 var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 
 function countdown() {
-    document.getElementById("countdown").style.display = "block";
+    document.getElementById("countdown").style.display= "inline";
     var count = 5;
     var timer = setInterval(
             function () {
@@ -293,6 +293,7 @@ var elapsed;
 var countdownTimer = 5;
 var elapsedTime = 0;
 generateRhythmSheet(solutionTrack);
+
 var trackStarted = false;
 var trackEnded = false;
 function changeActionButtonState() {
