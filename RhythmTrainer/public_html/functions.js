@@ -1,19 +1,50 @@
-var Notes = {
-    WHOLE_NOTE: 240000,
-    HALF_NOTE: 120000,
-    EIGHTH_NOTE: 30000,
-    QUARTER_NOTE: 60000,
-    SIXTENTH_NOTE: 15000,
-    DOTED_QUARTER_NOTE: 90000,
-    DOTED_HALF_NOTE: 180000,
-    DOTED_EIGHTH_NOTE: 45000,
-    DOTED_SIXTENTH_NOTE: 22500,
-    TRIPLET_QUARTER_NOTE: 40000,
-    TRIPLET_EIGHTH_NOTE: 20000,
-    TRIPLET_SIXENTH_NOTE: 10000
-};
+var wRest = {duration: 4000, type: "rest"};
+var hRest = {duration: 2000, type: "rest"};
+var qRest = {duration: 1000, type: "rest"};
+var eRest = {duration: 500, type: "rest"};
+var sRest = {duration: 250, type: "rest"};
+var dhRest = {duration: 3000, type: "rest"};
+var dqRest = {duration: 1500, type: "rest"};
+var deRest = {duration: 750, type: "rest"};
+var dsRest = {duration: 375, type: "rest"};
+var tqRest = {duration: 667, type: "rest"};
+var teRest = {duration: 333, type: "rest"};
+var tsRest = {duration: 167, type: "rest"};
+
+var wNote = {duration: 4000, type: "note"};
+var hNote = {duration: 2000, type: "note"};
+var qNote = {duration: 1000, type: "note"};
+var eNote = {duration: 500, type: "note"};
+var sNote = {duration: 250, type: "note"};
+var dhNote = {duration: 3000, type: "note"};
+var dqNote = {duration: 1500, type: "note"};
+var deNote = {duration: 750, type: "note"};
+var dsNote = {duration: 375, type: "note"};
+var tqNote = {duration: 667, type: "note"};
+var teNote = {duration: 333, type: "note"};
+var tsNote = {duration: 167, type: "note"};
+
+var notes = [];
+var rests = [];
+var userInput = [];
+var rhythmSheet = [];
+var solutionTrack = [qNote, qNote, wNote, hNote];
+var text;
+var elapsed;
+var checker;
+var countdown;
+var percentage;
+var letterGrade;
+var countedBeat = 0;
+var accurateHits = 0;
+var trackEnded = false;
+var trackStarted = false;
+var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
+var para = document.createElement("p");
+para.setAttribute("class", "notes");
 
 function isTrackDone() {
+    generateRhythmSheet(solutionTrack);
     checker = setInterval(function () {
         if (elapsed - 300 > rhythmSheet[rhythmSheet.length - 1] + 1) {
             clearInterval(elapsed);
@@ -27,9 +58,6 @@ function isTrackDone() {
     }, 1);
 }
 
-var percentage;
-var letterGrade;
-
 function compareTracks() {
     for (var i = 0; i <= userInput.length - 1; i++) {
         userInput[i] = userInput[i] - 150;
@@ -37,14 +65,13 @@ function compareTracks() {
     for (var x = 0; x < rests.length; x++) {
         var start = rests[x];
         var finish = rests[x] + rests[x + 1];
-        var hasCount = false;
+        var hasCounted = false;
         for (var j = 0; j <= userInput.length - 1; j++) {
-            if (start <= userInput[j] && userInput[j] <= finish && !hasCount) {
-
-                hasCount = true;
+            if (start <= userInput[j] && userInput[j] <= finish && !hasCounted) {
+                hasCounted = true;
             }
         }
-        if (!hasCount) {
+        if (!hasCounted) {
             accurateHits++;
         }
         x++;
@@ -63,6 +90,7 @@ function compareTracks() {
             accurateHits++;
         }
     }
+
     percentage = accurateHits / solutionTrack.length;
     if (percentage <= 0.6) {
         letterGrade = 'F';
@@ -79,123 +107,121 @@ function compareTracks() {
     }
     document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
-var para = document.createElement("p");
-para.setAttribute("class", "notes");
-var text;
-function checkNote(duration, type) {
 
-    if (duration == 4000)
-    {
+function toggleResultPopup() {
+    element = document.getElementById("overlay");
+    element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
+}
+
+function generateRhythmSheet(solutionTrack) {
+    for (var i = 0; i < solutionTrack.length; i++) {
+        rhythmSheet[0] = 0;
+        rhythmSheet[i + 1] = rhythmSheet[i] + solutionTrack[i].duration;
+        if (solutionTrack[i].type === "rest") {
+            rests.push(rhythmSheet[i], solutionTrack[i].duration);
+        } else if (solutionTrack[i].type === "note") {
+            notes.push(rhythmSheet[i]);
+        }
+    }
+}
+
+function start() {
+    for (var i = 0; i < solutionTrack.length; i++) {
+        tempNote = solutionTrack[i];
+        countedBeat = checkBarLineType(tempNote);
+        var element = document.getElementById("solutionTrackDisplay");
+        element.appendChild(para);
+    }
+    countdown();
+}
+
+function checkBarLineType(tempNote) {
+    if (countedBeat + tempNote.duration >= 4000) {
+        if (countedBeat + tempNote.duration > 4000) {
+            appendTieOver(tempNote);
+        } else if (countedBeat + tempNote.duration === 4000) {
+            appendBarLine(tempNote);
+        }
+    } else {
+        checkNote(tempNote.duration, tempNote.type);
+        countedBeat = countedBeat + tempNote.duration;
+    }
+    return countedBeat;
+}
+
+function appendTieOver(tempNote) {
+    var remainder;
+    var otherRemainder;
+    remainder = countedBeat + tempNote.duration - 4000;
+    otherRemainder = tempNote.duration - remainder;
+    checkNote(otherRemainder, tempNote.type);
+    text = document.createTextNode("V");
+    para.appendChild(text);
+    checkNote(remainder, tempNote.type);
+    countedBeat = remainder;
+}
+
+function appendBarLine(tempNote) {
+    checkNote(tempNote.duration, tempNote.type);
+    text = document.createTextNode("'");
+    para.appendChild(text);
+    countedBeat = 0;
+}
+
+function checkNote(duration, type) {
+    if (duration == 4000) {
         if (type == "rest") {
             text = document.createTextNode("W");
-
         } else if (type == "note") {
             text = document.createTextNode("w");
-
+        }
+    } else if (duration == 3000) {
+        if (type == "rest") {
+            text = document.createTextNode("D");
+        } else if (type == "note") {
+            text = document.createTextNode("d");
+        }
+    } else if (duration == 2000) {
+        if (type == "rest") {
+            text = document.createTextNode("H");
+        } else if (type == "note") {
+            text = document.createTextNode("h");
         }
     } else if (duration == 1000) {
         if (type == "rest") {
             text = document.createTextNode("Q");
-
         } else if (type == "note") {
             text = document.createTextNode("q");
-
         }
     } else if (duration == 500) {
         if (type == "rest") {
             text = document.createTextNode("E");
-
         } else if (type == "note") {
             text = document.createTextNode("e");
-
         }
     } else if (duration == 250) {
         if (type == "rest") {
             text = document.createTextNode("S");
-
         } else if (type == "note") {
             text = document.createTextNode("s");
         }
-    } else if (duration == 3000)
-    {
-        if (type == "rest") {
-            text = document.createTextNode("D");
-
-        } else if (type == "note") {
-            text = document.createTextNode("d");
-        }
-
-
     }
-
     para.appendChild(text);
-
 }
-function checkTieOver(tempNote, countedBeat)
-{
-    var remainder;
-    var otherRemainder;
-
-    if (countedBeat + tempNote.duration > 4000)
-    {
-        remainder = countedBeat + tempNote.duration - 4000;
-        otherRemainder = tempNote.duration - remainder;
-        checkNote(otherRemainder, tempNote.type);
-        text = document.createTextNode("V");
-        checkNote(remainder, tempNote.type);
-
-
-
-    } else {
-        checkNote(tempNote.duration, tempNote.type);
-        if (countedBeat >= 4000) {
-            text = document.createTextNode("'");
-            para.appendChild(text);
-            countedBeat = 0;
-        }
-    }
-
-}
-function start() {
-    var countedBeat = 0;
-
-    for (var i = 0; i < solutionTrack.length; i++) {
-        tempNote = solutionTrack[i];
-
-
-
-        countedBeat += solutionTrack[i].duration;
-        checkTieOver(tempNote, countedBeat);
-
-
-
-
-
-
-        var element = document.getElementById("solutionTrackDisplay");
-        element.appendChild(para);
-    }
-
-    countdown();
-}
-
-var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 
 function countdown() {
-    document.getElementById("countdown").style.display= "inline";
-    var count = 5;
+    document.getElementById("countdown").style.display = "block";
+    var countdownTimer = 5;
     var timer = setInterval(
             function () {
-                if (count > 0) {
-                    document.getElementById("countdown").innerHTML = count;
-                    count--;
+                if (countdownTimer > 0) {
+                    document.getElementById("countdown").innerHTML = countdownTimer;
+                    countdownTimer--;
                     metronomeTrack.play();
-
                 } else {
                     clearInterval(timer);
                     playTrack();
                     document.getElementById("actionButton").disabled = false;
-                    document.getElementById("countdown").style.display = "none";
                 }
             }, 1000);
 }
@@ -205,10 +231,6 @@ function playTrack() {
     accurateTimer();
 }
 
-function incrementTime() {
-    elapsedTime++;
-}
-
 function accurateTimer() {
     var start = new Date().getTime();
     elapsed = '0.0';
@@ -216,7 +238,6 @@ function accurateTimer() {
         var time = new Date().getTime() - start;
         elapsed = Math.floor(time);
         document.title = elapsed;
-
     }, 10);
 }
 
@@ -225,77 +246,18 @@ function appendToDiv() {
     var node = document.createTextNode(elapsed);
     userInput.push(elapsed);
     para.appendChild(node);
-
     var element = document.getElementById("timestamp");
     element.appendChild(para);
 }
 
-function toggleResultPopup() {
-    element = document.getElementById("overlay");
-    element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
-}
-
-var wRest = {duration: 4000, type: "rest"};
-var hRest = {duration: 2000, type: "rest"};
-var qRest = {duration: 1000, type: "rest"};
-var eRest = {duration: 500, type: "rest"};
-var sRest = {duration: 250, type: "rest"};
-var dhRest = {duration: 3000, type: "rest"};
-var dqRest = {duration: 1500, type: "rest"};
-var deRest = {duration: 750, type: "rest"};
-var dsRest = {duration: 375, type: "rest"};
-var tqRest = {duration: 667, type: "rest"};
-var teRest = {duration: 333, type: "rest"};
-var tsRest = {duration: 167, type: "rest"};
-
-var wNote = {duration: 4000, type: "note", key: "w"};
-var hNote = {duration: 2000, type: "note"};
-var qNote = {duration: 1000, type: "note"};
-var eNote = {duration: 500, type: "note"};
-var sNote = {duration: 250, type: "note"};
-var dhNote = {duration: 3000, type: "note"};
-var dqNote = {duration: 1500, type: "note"};
-var deNote = {duration: 750, type: "note"};
-var dsNote = {duration: 375, type: "note"};
-var tqNote = {duration: 667, type: "note"};
-var teNote = {duration: 333, type: "note"};
-var tsNote = {duration: 167, type: "note"};
-
-var notes = [];
-var rests = [];
-var solutionTrack = [qNote,qRest,qNote,qRest];
-var rhythmSheet = [];
-
-function generateRhythmSheet(solutionTrack) {
-
-    for (var i = 0; i < solutionTrack.length; i++) {
-        rhythmSheet[0] = 0;
-        rhythmSheet[i + 1] = rhythmSheet[i] + solutionTrack[i].duration;
-        if (solutionTrack[i].type == "rest") {
-            rests.push(rhythmSheet[i], solutionTrack[i].duration);
-        } else if (solutionTrack[i].type == "note") {
-            notes.push(rhythmSheet[i]);
-        }
-    }
-}
 window.addEventListener('keydown', function (event) {
-    if (trackEnded == true) {
+    if (trackEnded === true) {
 
-    } else if (trackStarted == true && event.keyCode == 32) {
+    } else if (trackStarted && event.keyCode == 32) {
         appendToDiv();
     }
 }, false);
-var userInput = [];
-var checker;
-var accurateHits = 0;
-var countdown;
-var elapsed;
-var countdownTimer = 5;
-var elapsedTime = 0;
-generateRhythmSheet(solutionTrack);
 
-var trackStarted = false;
-var trackEnded = false;
 function changeActionButtonState() {
     if (trackEnded) {
         document.getElementById("actionButton").disabled = true;
@@ -308,3 +270,4 @@ function changeActionButtonState() {
         appendToDiv();
     }
 }
+
