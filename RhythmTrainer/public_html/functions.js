@@ -32,7 +32,6 @@ var solutionTrack = [qNote, qNote, wNote, hNote];
 var text;
 var elapsed;
 var checker;
-var countdown;
 var percentage;
 var letterGrade;
 var countedBeat = 0;
