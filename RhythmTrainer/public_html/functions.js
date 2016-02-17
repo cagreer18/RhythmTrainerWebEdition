@@ -28,7 +28,7 @@ var notes = [];
 var rests = [];
 var userInput = [];
 var rhythmSheet = [];
-var solutionTrack = [qNote, qNote, wNote, hNote];
+var solutionTrack = [sNote, sNote, eNote, qNote, hNote, hNote, wNote, hNote];
 var text;
 var elapsed;
 var checker;
@@ -154,7 +154,7 @@ function appendTieOver(tempNote) {
     remainder = countedBeat + tempNote.duration - 4000;
     otherRemainder = tempNote.duration - remainder;
     checkNote(otherRemainder, tempNote.type);
-    text = document.createTextNode("V");
+    text = document.createTextNode(" V ");
     para.appendChild(text);
     checkNote(remainder, tempNote.type);
     countedBeat = remainder;
@@ -162,7 +162,7 @@ function appendTieOver(tempNote) {
 
 function appendBarLine(tempNote) {
     checkNote(tempNote.duration, tempNote.type);
-    text = document.createTextNode("'");
+    text = document.createTextNode(" ' ");
     para.appendChild(text);
     countedBeat = 0;
 }
@@ -172,7 +172,8 @@ function checkNote(duration, type) {
         if (type == "rest") {
             text = document.createTextNode("W");
         } else if (type == "note") {
-            text = document.createTextNode("w");
+            text = document.createElement("img");
+            text.setAttribute("src", "images/whole_note.png");
         }
     } else if (duration == 3000) {
         if (type == "rest") {
@@ -184,27 +185,31 @@ function checkNote(duration, type) {
         if (type == "rest") {
             text = document.createTextNode("H");
         } else if (type == "note") {
-            text = document.createTextNode("h");
+            text = document.createElement("img");
+            text.setAttribute("src", "images/half_note.png");
         }
     } else if (duration == 1000) {
         if (type == "rest") {
             text = document.createTextNode("Q");
         } else if (type == "note") {
-            text = document.createTextNode("q");
+            text = document.createElement("img");
+            text.setAttribute("src", "images/quarter_note.png");
         }
     } else if (duration == 500) {
         if (type == "rest") {
             text = document.createTextNode("E");
         } else if (type == "note") {
-            text = document.createTextNode("e");
+            text = document.createElement("img");
+            text.setAttribute("src", "images/eighth_note.png");
         }
     } else if (duration == 250) {
         if (type == "rest") {
             text = document.createTextNode("S");
         } else if (type == "note") {
-            text = document.createTextNode("s");
+            text = document.createElement("img");
+            text.setAttribute("src", "images/sixteenth_note.png");
         }
-    }
+    } 
     para.appendChild(text);
 }
 
