@@ -12,7 +12,7 @@
     padding: 25px;
 }
 
-@media screen and (min-width:   700px){
+@media screen and (min-width: 800px){
     .trackList{
         width:400px;
         border-radius: 25px;
