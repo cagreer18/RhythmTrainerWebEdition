@@ -28,7 +28,7 @@ var notes = [];
 var rests = [];
 var userInput = [];
 var rhythmSheet = [];
-var solutionTrack = [sNote, sNote, eNote, qNote, hNote, hNote, wNote, hNote];
+var solutionTrack = [sNote, sNote];
 var text;
 var elapsed;
 var checker;
@@ -241,7 +241,6 @@ function accurateTimer() {
     window.setInterval(function () {
         var time = new Date().getTime() - start;
         elapsed = Math.floor(time);
-        document.title = elapsed;
     }, 10);
 }
 

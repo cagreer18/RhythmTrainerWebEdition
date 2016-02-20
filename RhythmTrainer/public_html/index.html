@@ -5,23 +5,25 @@
         <title>Rhythm Trainer</title>
         <script src="functions.js"></script>
         <link rel="stylesheet" type="text/css" href="GameScreenStyles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     </head>
 
     <body onload="isTrackDone()">
-
-        
         <div id="solutionTrackDisplay"></div>
-        <div id="timestamp">
-            <div id="countdown"></div>
-        </div>
         <div class="overlay" id="overlay">
             <div id="result-popup">
-                <h1>Your Results</h1>
+                <p>Your Results</p>
                 <p id="result"></p>
                 <button id="OKButton" onclick="toggleResultPopup()">Ok</button>
             </div>
         </div>
-        <button id="actionButton" onclick="changeActionButtonState()">Start Timer</button>
+        <div id="wrap">
+            <div id="timestamp">
+                <div id="countdown"></div>
+            </div>
+            <button id="actionButton" onclick="changeActionButtonState()">Start Timer</button>
+
+        </div>
     </body>
 
 </html>
