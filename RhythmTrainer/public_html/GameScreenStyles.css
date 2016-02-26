@@ -2,7 +2,7 @@ html,
 body {
     padding: 0;
     margin: 0;
-    height: 95%;
+    height: 100%;
 }
 
 #countdown {
@@ -124,7 +124,9 @@ body {
 @media (min-width: 800px) {
     html,
     body {
-        height: 95%;
+        padding: 0;
+        margin: 0;
+        height: 100%;
     }
 
     #countdown {
@@ -135,9 +137,9 @@ body {
     }
 
     #solutionTrackDisplay{
-        position: relative;
+        position: absolute;
         top: 0;
-        height: 18%;
+        height: 50%;
         text-align: center;
     }
 
