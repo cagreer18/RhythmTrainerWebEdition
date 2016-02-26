@@ -9,7 +9,7 @@ body {
     font-size: 90px;
     color:white;
     margin:auto;
-    text-align: center; 
+    text-align: center;
 }
 
 #solutionTrackDisplay{
@@ -165,10 +165,10 @@ body {
     }
 
     #wrap {
-        position: relative;
-        height: 100%;
-        max-width: 100%;
-        width: auto;
+        position: absolute;
+        bottom: 0;
+        height: 50%;
+        width: 100%;
     }
 
 

@@ -10,23 +10,11 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="TrackSelectStyles.css">
+        <script src="functions.js"></script>
     </head>
-    <body>
-        <div class="trackList">
-            <a>
-                <p>Track 1 </p>
-                <p>Difficulty &#9733;&#9734;&#9734;&#9734;&#9734;</p>  
-            </a>
-            <hr>
-            <a>
-                <p>Track 2 </p>
-                <p>Difficulty &#9733;&#9733;&#9734;&#9734;&#9734;</p>  
-            </a>
-            <hr>
-            <a>
-                <p>Track 3 </p>
-                <p>Difficulty &#9733;&#9733;&#9733;&#9733;&#9733;</p>  
-            </a>
+    <body onload="populateList()">
+        <div class="trackList" id ="trackList">
+            
         </div>
     </body>
 </html>

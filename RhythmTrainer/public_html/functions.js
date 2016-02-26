@@ -28,16 +28,17 @@ var notes = [];
 var rests = [];
 var userInput = [];
 var rhythmSheet = [];
-var Track1 = [qNote, qNote, qRest, qNote, qRest, qNote, qNote, qRest];
-var Track2 = [qNote, hNote, qNote, qRest,qNote, hNote];
-var Track3 = [qNote, qNote, eNote, eNote, eNote, eNote, eRest, eNote, eRest, eNote, qNote, qNote]; 
-var Track4 = [qNote, dqNote, eNote, eNote, eNote, hNote, eNote, dqNote];
-var Track5 = [qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote,sNote];
-var Track6 = [qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, deNote, sNote, qNote, eNote, sRest, sNote,sNote];
-var Track7 = [qNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, qNote];
-var Track8 = [teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, eNote, eNote, qRest, hNote];
-var Track9 = [tqNote, tqNote,tqNote, teNote, teNote, teNote, teNote, teNote, teNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tqNote, tqNote,tqNote];
-var solutionTrack = Track9;//[sNote, eNote, qNote, hNote,wNote];
+var track1 = new Track([qNote, qNote, qRest, qNote, qRest, qNote, qNote, qRest], 1, true);
+var track2 = new Track([qNote, hNote, qNote, qRest, qNote, hNote], 1, true);
+var track3 = new Track([qNote, qNote, eNote, eNote, eNote, eNote, eRest, eNote, eRest, eNote, qNote, qNote], 2, false);
+var track4 = [qNote, dqNote, eNote, eNote, eNote, hNote, eNote, dqNote];
+var track5 = [qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote];
+var track6 = [qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote];
+var track7 = [qNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, qNote];
+var track8 = [teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, eNote, eNote, qRest, hNote];
+var track9 = [tqNote, tqNote, tqNote, teNote, teNote, teNote, teNote, teNote, teNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tqNote, tqNote, tqNote];
+var tracks = [track1, track2, track3];
+var solutionTrack = track1.notes;//[sNote, eNote, qNote, hNote,wNote];
 var text;
 var elapsed;
 var checker;
@@ -218,7 +219,7 @@ function checkNote(duration, type) {
             text = document.createElement("img");
             text.setAttribute("src", "images/sixteenth_note.png");
         }
-    } 
+    }
     para.appendChild(text);
 }
 
@@ -252,7 +253,13 @@ function accurateTimer() {
         elapsed = Math.floor(time);
     }, 10);
 }
+function Track(notes, difficulty, unlocked)
+{
+    this.notes = notes;
+    this.difficulty = difficulty;
+    this.unlocked = unlocked;
 
+}
 function appendToDiv() {
     var para = document.createElement("p");
     var node = document.createTextNode(elapsed);
@@ -283,3 +290,22 @@ function changeActionButtonState() {
     }
 }
 
+function populateList() {
+    for (var i = 0; i < tracks.length; i++) {
+        var para = document.createElement("p");
+        var node = document.createTextNode("Track" + (i + 1) + (tracks[i].unlocked ? "" : " Locked!"));
+        para.appendChild(node);
+        var difficulty = document.createElement("p");
+        for(var j = 0; j < 5; j++) {
+            if(j < tracks[i].difficulty) {
+                difficulty.innerHTML += "&#9733";
+            } else {
+                difficulty.innerHTML += "&#9734";
+            }
+        }
+        para.appendChild(difficulty);
+        var element = document.getElementById("trackList");
+        element.appendChild(para);
+        para.appendChild(document.createElement("br"));
+    }
+}
