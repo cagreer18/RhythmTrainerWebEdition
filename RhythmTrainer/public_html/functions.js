@@ -31,13 +31,13 @@ var rhythmSheet = [];
 var track1 = new Track([qNote, qNote, qRest, qNote, qRest, qNote, qNote, qRest], 1, true);
 var track2 = new Track([qNote, hNote, qNote, qRest, qNote, hNote], 1, true);
 var track3 = new Track([qNote, qNote, eNote, eNote, eNote, eNote, eRest, eNote, eRest, eNote, qNote, qNote], 2, false);
-var track4 = [qNote, dqNote, eNote, eNote, eNote, hNote, eNote, dqNote];
-var track5 = [qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote];
-var track6 = [qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote];
-var track7 = [qNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, qNote];
-var track8 = [teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, eNote, eNote, qRest, hNote];
-var track9 = [tqNote, tqNote, tqNote, teNote, teNote, teNote, teNote, teNote, teNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tqNote, tqNote, tqNote];
-var tracks = [track1, track2, track3];
+var track4 = new Track([qNote, dqNote, eNote, eNote, eNote, hNote, eNote, dqNote], 2, false);
+var track5 = new Track([qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote], 3, false);
+var track6 = new Track([qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote], 3, false);
+var track7 = new Track([qNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, qNote], 4, false);
+var track8 = new Track([teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, eNote, eNote, qRest, hNote], 4, false);
+var track9 = new Track([tqNote, tqNote, tqNote, teNote, teNote, teNote, teNote, teNote, teNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tqNote, tqNote, tqNote], 5, false);
+var tracks = [track1, track2, track3, track4, track5, track6, track7, track8, track9];
 var solutionTrack = track1.notes;//[sNote, eNote, qNote, hNote,wNote];
 var text;
 var elapsed;
@@ -69,7 +69,7 @@ function isTrackDone() {
 
 function compareTracks() {
     for (var i = 0; i <= userInput.length - 1; i++) {
-        userInput[i] = userInput[i] - 150;
+        userInput[i] = userInput[i];
     }
     for (var x = 0; x < rests.length; x++) {
         var start = rests[x];
