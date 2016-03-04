@@ -68,9 +68,6 @@ function isTrackDone() {
 }
 
 function compareTracks() {
-    for (var i = 0; i <= userInput.length - 1; i++) {
-        userInput[i] = userInput[i];
-    }
     for (var x = 0; x < rests.length; x++) {
         var start = rests[x];
         var finish = rests[x] + rests[x + 1];
