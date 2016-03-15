@@ -241,7 +241,10 @@ function playTrack() {
     document.getElementById("timestamp").innerHTML = "";
     accurateTimer();
 }
-
+function reloadPage()
+{
+    location.reload();
+}
 function accurateTimer() {
     var start = new Date().getTime();
     elapsed = '0.0';
