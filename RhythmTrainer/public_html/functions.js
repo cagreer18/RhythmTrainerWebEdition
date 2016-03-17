@@ -10,7 +10,6 @@ var dsRest = {duration: 375, type: "rest"};
 var tqRest = {duration: 667, type: "rest"};
 var teRest = {duration: 333, type: "rest"};
 var tsRest = {duration: 167, type: "rest"};
-
 var wNote = {duration: 4000, type: "note"};
 var hNote = {duration: 2000, type: "note"};
 var qNote = {duration: 1000, type: "note"};
@@ -23,12 +22,14 @@ var dsNote = {duration: 375, type: "note"};
 var tqNote = {duration: 667, type: "note"};
 var teNote = {duration: 333, type: "note"};
 var tsNote = {duration: 167, type: "note"};
-
 var notes = [];
 var rests = [];
 var userInput = [];
 var rhythmSheet = [];
-var track1 = new Track([qNote, qNote, qRest, qNote, qRest, qNote, qNote, qRest], 1, true);
+var topOfQueue;
+var bongo = new Audio("audio/Bongo.mp3");
+var shush = new Audio("audio/Shush.wav")
+var track1 = new Track([qNote, qRest, qRest, qNote, qRest, qRest, qNote, qRest], 1, true);
 var track2 = new Track([qNote, hNote, qNote, qRest, qNote, hNote], 1, true);
 var track3 = new Track([qNote, qNote, eNote, eNote, eNote, eNote, eRest, eNote, eRest, eNote, qNote, qNote], 2, false);
 var track4 = new Track([qNote, dqNote, eNote, eNote, eNote, hNote, eNote, dqNote], 2, false);
@@ -38,8 +39,9 @@ var track7 = new Track([qNote, teNote, teNote, teNote, qNote, teNote, teNote, te
 var track8 = new Track([teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, eNote, eNote, qRest, hNote], 4, false);
 var track9 = new Track([tqNote, tqNote, tqNote, teNote, teNote, teNote, teNote, teNote, teNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tqNote, tqNote, tqNote], 5, false);
 var tracks = [track1, track2, track3, track4, track5, track6, track7, track8, track9];
-var solutionTrack = track1.notes;//[sNote, eNote, qNote, hNote,wNote];
+var solutionTrack = track1.notes;//[sNote, eNote, qNote, hNote,wNote]
 var text;
+var buffer = 200;
 var elapsed;
 var checker;
 var percentage;
@@ -51,7 +53,6 @@ var trackStarted = false;
 var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 var para = document.createElement("p");
 para.setAttribute("class", "notes");
-
 function isTrackDone() {
     generateRhythmSheet(solutionTrack);
     checker = setInterval(function () {
@@ -66,37 +67,9 @@ function isTrackDone() {
         }
     }, 1);
 }
-
 function compareTracks() {
-    for (var x = 0; x < rests.length; x++) {
-        var start = rests[x];
-        var finish = rests[x] + rests[x + 1];
-        var hasCounted = false;
-        for (var j = 0; j <= userInput.length - 1; j++) {
-            if (start <= userInput[j] && userInput[j] <= finish && !hasCounted) {
-                hasCounted = true;
-            }
-        }
-        if (!hasCounted) {
-            accurateHits++;
-        }
-        x++;
-    }
 
-    for (var i = 0; i < notes.length; i++) {
-        var count = 0;
-        var hasCounted = false;
-        for (var j = count; j <= userInput.length - 1; j++) {
-            if ((notes[i] >= userInput[j] - 200) && (notes[i] <= userInput[j] + 200 && !hasCounted)) {
-                hasCounted = true;
-                count = j + 1;
-            }
-        }
-        if (hasCounted) {
-            accurateHits++;
-        }
-    }
-
+   
     percentage = accurateHits / solutionTrack.length;
     if (percentage <= 0.6) {
         letterGrade = 'F';
@@ -113,15 +86,13 @@ function compareTracks() {
     }
     document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
-
 function toggleResultPopup() {
     element = document.getElementById("overlay");
     element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
 }
-
 function generateRhythmSheet(solutionTrack) {
+    rhythmSheet[0] = 0;
     for (var i = 0; i < solutionTrack.length; i++) {
-        rhythmSheet[0] = 0;
         rhythmSheet[i + 1] = rhythmSheet[i] + solutionTrack[i].duration;
         if (solutionTrack[i].type === "rest") {
             rests.push(rhythmSheet[i], solutionTrack[i].duration);
@@ -129,8 +100,11 @@ function generateRhythmSheet(solutionTrack) {
             notes.push(rhythmSheet[i]);
         }
     }
+    accurateHits += rests.length/2;
+    topOfQueue = notes.shift();
+    topOfRestQueue = rests.shift();
+    topOfRestQueueDuration = rests.shift();
 }
-
 function start() {
     for (var i = 0; i < solutionTrack.length; i++) {
         tempNote = solutionTrack[i];
@@ -140,7 +114,6 @@ function start() {
     }
     countdown();
 }
-
 function checkBarLineType(tempNote) {
     if (countedBeat + tempNote.duration >= 4000) {
         if (countedBeat + tempNote.duration > 4000) {
@@ -154,7 +127,6 @@ function checkBarLineType(tempNote) {
     }
     return countedBeat;
 }
-
 function appendTieOver(tempNote) {
     var remainder;
     var otherRemainder;
@@ -166,14 +138,12 @@ function appendTieOver(tempNote) {
     checkNote(remainder, tempNote.type);
     countedBeat = remainder;
 }
-
 function appendBarLine(tempNote) {
     checkNote(tempNote.duration, tempNote.type);
     text = document.createTextNode(" ' ");
     para.appendChild(text);
     countedBeat = 0;
 }
-
 function checkNote(duration, type) {
     if (duration == 4000) {
         if (type == "rest") {
@@ -219,7 +189,6 @@ function checkNote(duration, type) {
     }
     para.appendChild(text);
 }
-
 function countdown() {
     document.getElementById("countdown").style.display = "block";
     var countdownTimer = 5;
@@ -236,7 +205,6 @@ function countdown() {
                 }
             }, 1000);
 }
-
 function playTrack() {
     document.getElementById("timestamp").innerHTML = "";
     accurateTimer();
@@ -258,25 +226,49 @@ function Track(notes, difficulty, unlocked)
     this.notes = notes;
     this.difficulty = difficulty;
     this.unlocked = unlocked;
-
 }
+var topOfRestQueue;
+var topOfRestQueueDuration;
 function appendToDiv() {
     var para = document.createElement("p");
     var node = document.createTextNode(elapsed);
-    userInput.push(elapsed);
+    var currentInput = elapsed;
+    while (currentInput >= topOfQueue-buffer) {
+          
+        if (currentInput >= (topOfQueue - buffer) && currentInput <= (topOfQueue + buffer)) {
+            accurateHits++;
+            
+            bongo.play();
+        }
+        topOfQueue = notes.shift();
+    
+
+    }
+    
+    while (currentInput >= topOfRestQueue)
+    {
+        if (topOfRestQueue <= currentInput && currentInput < topOfRestQueue + (topOfRestQueueDuration-200))
+        {
+            accurateHits--;
+            
+            shush.play();
+
+        }
+        
+        topOfRestQueue = rests.shift()
+        topOfRestQueueDuration = rests.shift();
+    }
+    
     para.appendChild(node);
     var element = document.getElementById("timestamp");
     element.appendChild(para);
 }
-
 window.addEventListener('keydown', function (event) {
     if (trackEnded === true) {
-
     } else if (trackStarted && event.keyCode == 32) {
         appendToDiv();
     }
 }, false);
-
 function changeActionButtonState() {
     if (trackEnded) {
         document.getElementById("actionButton").disabled = true;
@@ -289,15 +281,14 @@ function changeActionButtonState() {
         appendToDiv();
     }
 }
-
 function populateList() {
     for (var i = 0; i < tracks.length; i++) {
         var para = document.createElement("p");
         var node = document.createTextNode("Track" + (i + 1) + (tracks[i].unlocked ? "" : " Locked!"));
         para.appendChild(node);
         var difficulty = document.createElement("p");
-        for(var j = 0; j < 5; j++) {
-            if(j < tracks[i].difficulty) {
+        for (var j = 0; j < 5; j++) {
+            if (j < tracks[i].difficulty) {
                 difficulty.innerHTML += "&#9733";
             } else {
                 difficulty.innerHTML += "&#9734";
