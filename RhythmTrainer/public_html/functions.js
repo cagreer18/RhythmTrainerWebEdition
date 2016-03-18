@@ -10,6 +10,7 @@ var dsRest = {duration: 375, type: "rest"};
 var tqRest = {duration: 667, type: "rest"};
 var teRest = {duration: 333, type: "rest"};
 var tsRest = {duration: 167, type: "rest"};
+
 var wNote = {duration: 4000, type: "note"};
 var hNote = {duration: 2000, type: "note"};
 var qNote = {duration: 1000, type: "note"};
@@ -22,24 +23,15 @@ var dsNote = {duration: 375, type: "note"};
 var tqNote = {duration: 667, type: "note"};
 var teNote = {duration: 333, type: "note"};
 var tsNote = {duration: 167, type: "note"};
+
 var notes = [];
 var rests = [];
 var userInput = [];
 var rhythmSheet = [];
 var topOfQueue;
 var bongo = new Audio("audio/Bongo.mp3");
-var shush = new Audio("audio/Shush.wav")
-var track1 = new Track([qNote, qRest, qRest, qNote, qRest, qRest, qNote, qRest], 1, true);
-var track2 = new Track([qNote, hNote, qNote, qRest, qNote, hNote], 1, true);
-var track3 = new Track([qNote, qNote, eNote, eNote, eNote, eNote, eRest, eNote, eRest, eNote, qNote, qNote], 2, false);
-var track4 = new Track([qNote, dqNote, eNote, eNote, eNote, hNote, eNote, dqNote], 2, false);
-var track5 = new Track([qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, sNote, sNote, sNote, sNote, qNote, eNote, sRest, sNote, sNote], 3, false);
-var track6 = new Track([qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote, qNote, deNote, sNote, qNote, eNote, sRest, sNote, sNote], 3, false);
-var track7 = new Track([qNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, teNote, teNote, teNote, qNote, teNote, teNote, teNote, qNote], 4, false);
-var track8 = new Track([teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, teNote, teRest, teNote, teNote, eNote, eNote, qRest, hNote], 4, false);
-var track9 = new Track([tqNote, tqNote, tqNote, teNote, teNote, teNote, teNote, teNote, teNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tsNote, tqNote, tqNote, tqNote], 5, false);
-var tracks = [track1, track2, track3, track4, track5, track6, track7, track8, track9];
-var solutionTrack = track1.notes;//[sNote, eNote, qNote, hNote,wNote]
+var shush = new Audio("audio/Shush.wav");
+var solutionTrack = [];
 var text;
 var buffer = 200;
 var elapsed;
@@ -53,12 +45,38 @@ var trackStarted = false;
 var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 var para = document.createElement("p");
 para.setAttribute("class", "notes");
+
+var selectedLevel = 1;
+
+var q1 = {image: "q1.jpg", note: [qNote, qNote, qNote, qNote]};
+var q2 = {image: "q2.jpg", note: [hNote, qNote, qNote]};
+var level1 = [q1, q2];
+var levels = ["sample1","sample2","sample3"];
+var solutionImages = [];
+
+function generateSolutionTrack() {
+    for (var x = 0; x < 4; x++) {
+        var randomIndex = Math.floor(Math.random() * 10);
+        if (randomIndex > 0) {
+            var chosenMeasure = level1[Math.floor(Math.random() * level1.length)];
+            for (var y = 0; y < chosenMeasure["note"].length; y++) {
+                solutionTrack.push(chosenMeasure["note"][y]);
+            }
+            solutionImages.push(chosenMeasure["image"]);
+        }
+        else{
+            //choose a measure from a previous track
+        }
+    }
+}
+
 function isTrackDone() {
+    generateSolutionTrack();
     generateRhythmSheet(solutionTrack);
     checker = setInterval(function () {
-        if (elapsed - 300 > rhythmSheet[rhythmSheet.length - 1] + 1) {
+        if (elapsed > rhythmSheet[rhythmSheet.length - 1] + 1) {
             clearInterval(elapsed);
-            elapsed = 0;
+            elapsed = 0; 
             compareTracks();
             toggleResultPopup();
             clearInterval(checker);
@@ -67,9 +85,8 @@ function isTrackDone() {
         }
     }, 1);
 }
-function compareTracks() {
 
-   
+function compareTracks() {
     percentage = accurateHits / solutionTrack.length;
     if (percentage <= 0.6) {
         letterGrade = 'F';
@@ -86,109 +103,45 @@ function compareTracks() {
     }
     document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
+
 function toggleResultPopup() {
     element = document.getElementById("overlay");
     element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
 }
+
 function generateRhythmSheet(solutionTrack) {
     rhythmSheet[0] = 0;
     for (var i = 0; i < solutionTrack.length; i++) {
-        rhythmSheet[i + 1] = rhythmSheet[i] + solutionTrack[i].duration;
+        rhythmSheet[i + 1] = rhythmSheet[i] + solutionTrack[i]["duration"];
         if (solutionTrack[i].type === "rest") {
-            rests.push(rhythmSheet[i], solutionTrack[i].duration);
+            rests.push(rhythmSheet[i], solutionTrack[i]["duration"]);
         } else if (solutionTrack[i].type === "note") {
             notes.push(rhythmSheet[i]);
         }
     }
-    accurateHits += rests.length/2;
+    accurateHits += rests.length / 2;
     topOfQueue = notes.shift();
     topOfRestQueue = rests.shift();
     topOfRestQueueDuration = rests.shift();
 }
+
 function start() {
+    checkNote();
     for (var i = 0; i < solutionTrack.length; i++) {
-        tempNote = solutionTrack[i];
-        countedBeat = checkBarLineType(tempNote);
         var element = document.getElementById("solutionTrackDisplay");
         element.appendChild(para);
     }
     countdown();
 }
-function checkBarLineType(tempNote) {
-    if (countedBeat + tempNote.duration >= 4000) {
-        if (countedBeat + tempNote.duration > 4000) {
-            appendTieOver(tempNote);
-        } else if (countedBeat + tempNote.duration === 4000) {
-            appendBarLine(tempNote);
-        }
-    } else {
-        checkNote(tempNote.duration, tempNote.type);
-        countedBeat = countedBeat + tempNote.duration;
+
+function checkNote() {
+    for (var x = 0; x < solutionImages.length; x++) {
+        text = document.createElement("img");
+        text.setAttribute("src", "images/" + solutionImages[x]);
+        para.appendChild(text);
     }
-    return countedBeat;
 }
-function appendTieOver(tempNote) {
-    var remainder;
-    var otherRemainder;
-    remainder = countedBeat + tempNote.duration - 4000;
-    otherRemainder = tempNote.duration - remainder;
-    checkNote(otherRemainder, tempNote.type);
-    text = document.createTextNode(" V ");
-    para.appendChild(text);
-    checkNote(remainder, tempNote.type);
-    countedBeat = remainder;
-}
-function appendBarLine(tempNote) {
-    checkNote(tempNote.duration, tempNote.type);
-    text = document.createTextNode(" ' ");
-    para.appendChild(text);
-    countedBeat = 0;
-}
-function checkNote(duration, type) {
-    if (duration == 4000) {
-        if (type == "rest") {
-            text = document.createTextNode("W");
-        } else if (type == "note") {
-            text = document.createElement("img");
-            text.setAttribute("src", "images/whole_note.png");
-        }
-    } else if (duration == 3000) {
-        if (type == "rest") {
-            text = document.createTextNode("D");
-        } else if (type == "note") {
-            text = document.createTextNode("d");
-        }
-    } else if (duration == 2000) {
-        if (type == "rest") {
-            text = document.createTextNode("H");
-        } else if (type == "note") {
-            text = document.createElement("img");
-            text.setAttribute("src", "images/half_note.png");
-        }
-    } else if (duration == 1000) {
-        if (type == "rest") {
-            text = document.createTextNode("Q");
-        } else if (type == "note") {
-            text = document.createElement("img");
-            text.setAttribute("src", "images/quarter_note.png");
-        }
-    } else if (duration == 500) {
-        if (type == "rest") {
-            text = document.createTextNode("E");
-        } else if (type == "note") {
-            text = document.createElement("img");
-            text.setAttribute("src", "images/eighth_note.png");
-        }
-    } else if (duration == 250) {
-        if (type == "rest") {
-            text = document.createTextNode("S");
-        } else if (type == "note") {
-            text = document.createElement("img");
-            text.setAttribute("src", "images/sixteenth_note.png");
-        }
-    }
-    para.appendChild(text);
-}
+
 function countdown() {
     document.getElementById("countdown").style.display = "block";
     var countdownTimer = 5;
@@ -205,14 +158,16 @@ function countdown() {
                 }
             }, 1000);
 }
+
 function playTrack() {
     document.getElementById("timestamp").innerHTML = "";
     accurateTimer();
 }
-function reloadPage()
-{
+
+function reloadPage() {
     location.reload();
 }
+
 function accurateTimer() {
     var start = new Date().getTime();
     elapsed = '0.0';
@@ -221,54 +176,40 @@ function accurateTimer() {
         elapsed = Math.floor(time);
     }, 10);
 }
-function Track(notes, difficulty, unlocked)
-{
-    this.notes = notes;
-    this.difficulty = difficulty;
-    this.unlocked = unlocked;
-}
+
 var topOfRestQueue;
 var topOfRestQueueDuration;
 function appendToDiv() {
     var para = document.createElement("p");
     var node = document.createTextNode(elapsed);
     var currentInput = elapsed;
-    while (currentInput >= topOfQueue-buffer) {
-          
+    while (currentInput >= topOfQueue - buffer) {
         if (currentInput >= (topOfQueue - buffer) && currentInput <= (topOfQueue + buffer)) {
             accurateHits++;
-            
             bongo.play();
         }
         topOfQueue = notes.shift();
-    
-
     }
-    
-    while (currentInput >= topOfRestQueue)
-    {
-        if (topOfRestQueue <= currentInput && currentInput < topOfRestQueue + (topOfRestQueueDuration-200))
-        {
+    while (currentInput >= topOfRestQueue) {
+        if (topOfRestQueue <= currentInput && currentInput < topOfRestQueue + (topOfRestQueueDuration - 200)) {
             accurateHits--;
-            
             shush.play();
-
         }
-        
-        topOfRestQueue = rests.shift()
+        topOfRestQueue = rests.shift();
         topOfRestQueueDuration = rests.shift();
     }
-    
     para.appendChild(node);
     var element = document.getElementById("timestamp");
     element.appendChild(para);
 }
+
 window.addEventListener('keydown', function (event) {
     if (trackEnded === true) {
-    } else if (trackStarted && event.keyCode == 32) {
+    } else if (trackStarted && event.keyCode == 32){
         appendToDiv();
     }
 }, false);
+
 function changeActionButtonState() {
     if (trackEnded) {
         document.getElementById("actionButton").disabled = true;
@@ -281,20 +222,12 @@ function changeActionButtonState() {
         appendToDiv();
     }
 }
+
 function populateList() {
-    for (var i = 0; i < tracks.length; i++) {
+    for (var i = 0; i < levels.length; i++) {
         var para = document.createElement("p");
-        var node = document.createTextNode("Track" + (i + 1) + (tracks[i].unlocked ? "" : " Locked!"));
-        para.appendChild(node);
-        var difficulty = document.createElement("p");
-        for (var j = 0; j < 5; j++) {
-            if (j < tracks[i].difficulty) {
-                difficulty.innerHTML += "&#9733";
-            } else {
-                difficulty.innerHTML += "&#9734";
-            }
-        }
-        para.appendChild(difficulty);
+        var node = document.createTextNode("Track" + " " + (i + 1) + " " + (levels[i]).toString());
+        para.appendChild(node);       
         var element = document.getElementById("trackList");
         element.appendChild(para);
         para.appendChild(document.createElement("br"));
