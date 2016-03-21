@@ -58,6 +58,33 @@ var h4 = {image: "h4.jpg", note: [hRest, hRest]};
 var level2 = [h1, h2, h3, h4];
 var q1 = {image: "q1.jpg", note: [qNote, qNote, qNote, qNote]};
 var q2 = {image: "q2.jpg", note: [hNote, qNote, qNote]};
+var q3 = {image: "q3.jpg", note: [qNote, qNote, hNote]};
+var q4 = {image: "q4.jpg", note: [qNote, hNote, qNote]};
+var q5 = {image: "q5.jpg", note: [qNote, qRest, hNote]};
+var q6 = {image: "q6.jpg", note: [qRest, qNote, hNote]};
+var q7 = {image: "q7.jpg", note: [qNote, qNote, qRest, qNote]};
+var q8 = {image: "q8.jpg", note: [qNote, qNote, qNote, qRest]};
+var q9 = {image: "q9.jpg", note: [qRest, qNote, hNote]};
+var q10 = {image: "q10.jpg", note: [qRest, qNote, qNote, qNote]};
+var q11 = {image: "q11.jpg", note: [qNote, hNote, qNote]};
+var q12 = {image: "q12.jpg", note: [hNote, qRest, qNote]};
+var w1 = {image: "w1.jpg", note: [wNote]};
+var w2 = {image: "w2.jpg", note: [wRest]};
+var h1 = {image: "h1.jpg", note: [hNote, hNote]};
+var h2 = {image: "h2.jpg", note: [hNote, hRest]};
+var h3 = {image: "h3.jpg", note: [hRest, hNote]};
+var h4 = {image: "h4.jpg", note: [hRest, hRest]};
+var hd1 = {image: "hd1.jpg", note: [dhNote, qNote]};
+var hd2 = {image: "hd2.jpg", note: [dhNote, qNote]};
+var hd3 = {image: "hd3.jpg", note: [qNote, dhNote]};
+var hd4 = {image: "hd4.jpg", note: [qNote, dhNote]};
+var hd5 = {image: "hd5.jpg", note: [qNote, dhNote]};
+var hd6 = {image: "hd6.jpg", note: [dhRest, qNote]};
+var level1 = [w1, w2];
+var level2 = [h1, h2, h3, h4];
+var level3 = [hd1, hd2, hd3, hd4, hd5, hd6];
+var level4 = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12];
+var levels = [level1, level2, level3, level4];
 var level3 = [q1, q2];
 var levels = [level1, level2, level3];
 var solutionImages = [];
@@ -242,13 +269,44 @@ function changeActionButtonState() {
     }
 }
 
+var levelNote;
 function populateList() {
+    var thumbnail;
     for (var i = 0; i < levels.length; i++) {
         var para = document.createElement("p");
-        var node = document.createTextNode("Track" + " " + (i + 1) + " " + (levels[i]).toString());
+        switch (i) {
+            case 0:
+                levelNote = "Whole Note";
+                thumbnail = "w1.jpg";
+                break;
+            case 1:
+                levelNote = "Half Note";
+                thumbnail = "h1.jpg";
+                break;
+            case 2:
+                levelNote = "Dotted Half Note";
+                thumbnail = "hd2.jpg";
+                break;
+            case 3:
+                levelNote = "Quarter Note";
+                thumbnail = "q1.jpg";
+                break;
+            default:
+                break;
+        }
+        var node = document.createTextNode("Level " + (i + 1) + " " + levelNote);
         para.appendChild(node);
+        var imgNode = document.createElement("input");
+        imgNode.setAttribute("type", "image");
+        imgNode.setAttribute("src", "images/" + thumbnail);
+        imgNode.setAttribute("onclick", "loadPage()");
         var element = document.getElementById("trackList");
         element.appendChild(para);
+        element.appendChild(imgNode);
         para.appendChild(document.createElement("br"));
     }
+}
+
+function loadPage() {
+    location.href = 'index.html';
 }

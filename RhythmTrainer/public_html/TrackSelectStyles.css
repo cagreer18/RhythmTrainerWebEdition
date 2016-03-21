@@ -1,27 +1,20 @@
 
+/*Phone*/
 .trackList{
-    margin:auto;
+    overflow: hidden;
     border-radius: 25px;
     background-color:#8038BA;
     color: #C2D5DE;
-
+    font-size: 16pt;
 }
 
-.trackList a {
-    display: block;
-    padding: 25px;
-}
-
+/*Desktop*/
 @media screen and (min-width: 800px){
     .trackList{
-        width:400px;
+        overflow: hidden;
         border-radius: 25px;
         background-color:#8038BA;
         color: #C2D5DE;
+        font-size: 20pt;
     }
-
-    .trackList a {
-        display: block;
-        padding: 25px;
-    } 
 }
