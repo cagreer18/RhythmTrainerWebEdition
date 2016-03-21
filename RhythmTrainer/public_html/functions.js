@@ -46,26 +46,40 @@ var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 var para = document.createElement("p");
 para.setAttribute("class", "notes");
 
-var selectedLevel = 1;
+var selectedLevel = 3;
 
+var w1 = {image: "w1.jpg", note: [wNote]};
+var w2 = {image: "w2.jpg", note: [wRest]};
+var level1 = [w1, w2];
+var h1 = {image: "h1.jpg", note: [hNote, hNote]};
+var h2 = {image: "h2.jpg", note: [hNote, hRest]};
+var h3 = {image: "h3.jpg", note: [hRest, hNote]};
+var h4 = {image: "h4.jpg", note: [hRest, hRest]};
+var level2 = [h1, h2, h3, h4];
 var q1 = {image: "q1.jpg", note: [qNote, qNote, qNote, qNote]};
 var q2 = {image: "q2.jpg", note: [hNote, qNote, qNote]};
-var level1 = [q1, q2];
-var levels = ["sample1","sample2","sample3"];
+var level3 = [q1, q2];
+var levels = [level1, level2, level3];
 var solutionImages = [];
 
 function generateSolutionTrack() {
     for (var x = 0; x < 4; x++) {
         var randomIndex = Math.floor(Math.random() * 10);
         if (randomIndex > 0) {
-            var chosenMeasure = level1[Math.floor(Math.random() * level1.length)];
+            var chosenLevel = levels[selectedLevel - 1];
+            var chosenMeasure = chosenLevel[Math.floor(Math.random() * chosenLevel.length)];
             for (var y = 0; y < chosenMeasure["note"].length; y++) {
                 solutionTrack.push(chosenMeasure["note"][y]);
             }
             solutionImages.push(chosenMeasure["image"]);
-        }
-        else{
-            //choose a measure from a previous track
+        } else {
+            var chosenLevel = levels[(Math.floor(Math.random()) * selectedLevel)];
+            var chosenMeasure = chosenLevel[Math.floor(Math.random() * chosenLevel.length)];
+            for (var y = 0; y < chosenMeasure["note"].length; y++)
+            {
+                solutionTrack.push(chosenMeasure["note"][y]);
+            }
+            solutionImages.push(chosenMeasure["image"]);
         }
     }
 }
@@ -76,7 +90,7 @@ function isTrackDone() {
     checker = setInterval(function () {
         if (elapsed > rhythmSheet[rhythmSheet.length - 1] + 1) {
             clearInterval(elapsed);
-            elapsed = 0; 
+            elapsed = 0;
             compareTracks();
             toggleResultPopup();
             clearInterval(checker);
@@ -136,9 +150,14 @@ function start() {
 
 function checkNote() {
     for (var x = 0; x < solutionImages.length; x++) {
+        text = document.createElement("img")
+        text.setAttribute("src", "images/bar_line.jpg" )
+        para.appendChild(text)
         text = document.createElement("img");
         text.setAttribute("src", "images/" + solutionImages[x]);
         para.appendChild(text);
+        
+        
     }
 }
 
@@ -205,7 +224,7 @@ function appendToDiv() {
 
 window.addEventListener('keydown', function (event) {
     if (trackEnded === true) {
-    } else if (trackStarted && event.keyCode == 32){
+    } else if (trackStarted && event.keyCode == 32) {
         appendToDiv();
     }
 }, false);
@@ -227,7 +246,7 @@ function populateList() {
     for (var i = 0; i < levels.length; i++) {
         var para = document.createElement("p");
         var node = document.createTextNode("Track" + " " + (i + 1) + " " + (levels[i]).toString());
-        para.appendChild(node);       
+        para.appendChild(node);
         var element = document.getElementById("trackList");
         element.appendChild(para);
         para.appendChild(document.createElement("br"));
