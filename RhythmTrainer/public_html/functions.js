@@ -46,16 +46,8 @@ var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 var para = document.createElement("p");
 para.setAttribute("class", "notes");
 
-var selectedLevel = 3;
+var selectedLevel = 1;
 
-var w1 = {image: "w1.jpg", note: [wNote]};
-var w2 = {image: "w2.jpg", note: [wRest]};
-var level1 = [w1, w2];
-var h1 = {image: "h1.jpg", note: [hNote, hNote]};
-var h2 = {image: "h2.jpg", note: [hNote, hRest]};
-var h3 = {image: "h3.jpg", note: [hRest, hNote]};
-var h4 = {image: "h4.jpg", note: [hRest, hRest]};
-var level2 = [h1, h2, h3, h4];
 var q1 = {image: "q1.jpg", note: [qNote, qNote, qNote, qNote]};
 var q2 = {image: "q2.jpg", note: [hNote, qNote, qNote]};
 var q3 = {image: "q3.jpg", note: [qNote, qNote, hNote]};
@@ -85,8 +77,6 @@ var level2 = [h1, h2, h3, h4];
 var level3 = [hd1, hd2, hd3, hd4, hd5, hd6];
 var level4 = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12];
 var levels = [level1, level2, level3, level4];
-var level3 = [q1, q2];
-var levels = [level1, level2, level3];
 var solutionImages = [];
 
 function generateSolutionTrack() {
@@ -178,13 +168,11 @@ function start() {
 function checkNote() {
     for (var x = 0; x < solutionImages.length; x++) {
         text = document.createElement("img")
-        text.setAttribute("src", "images/bar_line.jpg" )
+        text.setAttribute("src", "images/bar_line.jpg")
         para.appendChild(text)
         text = document.createElement("img");
         text.setAttribute("src", "images/" + solutionImages[x]);
         para.appendChild(text);
-        
-        
     }
 }
 
