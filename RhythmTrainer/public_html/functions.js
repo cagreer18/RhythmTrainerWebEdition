@@ -166,6 +166,12 @@ function start() {
 }
 
 function checkNote() {
+    text = document.createElement("img");
+    text.setAttribute("src", "images/perc_clef.jpg");
+    para.appendChild(text);
+    text = document.createElement("img")
+    text.setAttribute("src", "images/4-4_time_signature_1.jpg")
+    para.appendChild(text);
     for (var x = 0; x < solutionImages.length; x++) {
         text = document.createElement("img")
         text.setAttribute("src", "images/bar_line.jpg")
@@ -174,6 +180,9 @@ function checkNote() {
         text.setAttribute("src", "images/" + solutionImages[x]);
         para.appendChild(text);
     }
+    text = document.createElement("img");
+    text.setAttribute("src", "images/bar_line_final.jpg");
+    para.appendChild(text);
 }
 
 function countdown() {
