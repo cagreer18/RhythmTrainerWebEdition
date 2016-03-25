@@ -179,8 +179,6 @@ function addImages() {
     for (var x = 0; x < solutionImages.length; x++) {
         var barline = document.createElement("img");
         barline.setAttribute("class", "notation");
-        barline.setAttribute("onload", "resize()");
-
         switch (x) {
             case 0:
                 barline.setAttribute("src", "images/perc_clef.jpg");
@@ -195,7 +193,7 @@ function addImages() {
                 para.appendChild(barline);
                 break;
             case 2:
-                barline.setAttribute("src", "images/bar_line_final.jpg");
+                barline.setAttribute("src", "images/bar_line.jpg");
                 para.appendChild(barline);
                 para.appendChild(document.createElement("br"));
                 barline = document.createElement("img");
@@ -214,11 +212,13 @@ function addImages() {
         var measure = document.createElement("img");
         measure.setAttribute("class", "notation");
         measure.setAttribute("src", "images/" + solutionImages[x]);
+        measure.setAttribute("onload", "resize()");
         para.appendChild(measure);
     }
     barline = document.createElement("img");
     barline.setAttribute("class", "notation");
     barline.setAttribute("src", "images/bar_line_final.jpg");
+    barline.setAttribute("onload", "resize()");
     para.appendChild(barline);
 }
 
