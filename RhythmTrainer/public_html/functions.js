@@ -157,32 +157,68 @@ function generateRhythmSheet(solutionTrack) {
 }
 
 function start() {
-    checkNote();
+    addImages();
     for (var i = 0; i < solutionTrack.length; i++) {
-        var element = document.getElementById("solutionTrackDisplay");
+        var element = document.getElementById("solutionTrackDisplay");  
         element.appendChild(para);
     }
     countdown();
 }
 
-function checkNote() {
-    text = document.createElement("img");
-    text.setAttribute("src", "images/perc_clef.jpg");
-    para.appendChild(text);
-    text = document.createElement("img")
-    text.setAttribute("src", "images/4-4_time_signature_1.jpg")
-    para.appendChild(text);
-    for (var x = 0; x < solutionImages.length; x++) {
-        text = document.createElement("img")
-        text.setAttribute("src", "images/bar_line.jpg")
-        para.appendChild(text)
-        text = document.createElement("img");
-        text.setAttribute("src", "images/" + solutionImages[x]);
-        para.appendChild(text);
+function resize() {
+    var notes = document.getElementsByClassName("notation");
+    for (var x = 0; x < notes.length; x++) {
+        var newImage = new Image();
+        newImage.src = notes[x].getAttribute("src");
+        var width = document.body.clientWidth / 1366 * newImage.width;
+        notes[x].style.width = width + "px";
     }
-    text = document.createElement("img");
-    text.setAttribute("src", "images/bar_line_final.jpg");
-    para.appendChild(text);
+}
+
+function addImages() {
+    for (var x = 0; x < solutionImages.length; x++) {
+        var barline = document.createElement("img");
+        barline.setAttribute("class", "notation");
+        
+        switch (x) {
+            case 0:
+                barline.setAttribute("src", "images/perc_clef.jpg");
+                para.appendChild(barline);
+                barline = document.createElement("img");
+                barline.setAttribute("class", "notation");
+                barline.setAttribute("src", "images/4-4_time_signature_1.jpg");
+                para.appendChild(barline);
+                break;
+            case 1:
+                barline.setAttribute("src", "images/bar_line.jpg");
+                para.appendChild(barline);
+                break;
+            case 2:
+                barline.setAttribute("src", "images/bar_line_final.jpg");
+                para.appendChild(barline);
+                para.appendChild(document.createElement("br"));
+                barline = document.createElement("img");
+                barline.setAttribute("class", "notation");
+                barline.setAttribute("src", "images/perc_clef.jpg");
+                para.appendChild(barline);
+                break;
+            case 3:
+                barline.setAttribute("src", "images/bar_line.jpg");
+                para.appendChild(barline);
+                break;
+            default:
+                break;
+
+        }
+        var measure = document.createElement("img");
+        measure.setAttribute("class", "notation");
+        measure.setAttribute("src", "images/" + solutionImages[x]);
+        para.appendChild(measure);
+    }
+    barline = document.createElement("img");
+    barline.setAttribute("class", "notation");
+    barline.setAttribute("src", "images/bar_line_final.jpg");
+    para.appendChild(barline);
 }
 
 function countdown() {
