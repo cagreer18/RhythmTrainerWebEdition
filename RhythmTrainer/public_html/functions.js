@@ -159,7 +159,7 @@ function generateRhythmSheet(solutionTrack) {
 function start() {
     addImages();
     for (var i = 0; i < solutionTrack.length; i++) {
-        var element = document.getElementById("solutionTrackDisplay");  
+        var element = document.getElementById("solutionTrackDisplay");
         element.appendChild(para);
     }
     countdown();
@@ -179,7 +179,8 @@ function addImages() {
     for (var x = 0; x < solutionImages.length; x++) {
         var barline = document.createElement("img");
         barline.setAttribute("class", "notation");
-        
+        barline.setAttribute("onload", "resize()");
+
         switch (x) {
             case 0:
                 barline.setAttribute("src", "images/perc_clef.jpg");
