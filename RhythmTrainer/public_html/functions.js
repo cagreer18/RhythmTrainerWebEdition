@@ -46,8 +46,6 @@ var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
 var para = document.createElement("p");
 para.setAttribute("class", "notes");
 
-var selectedLevel = 1;
-
 var q1 = {image: "q1.jpg", note: [qNote, qNote, qNote, qNote]};
 var q2 = {image: "q2.jpg", note: [hNote, qNote, qNote]};
 var q3 = {image: "q3.jpg", note: [qNote, qNote, hNote]};
@@ -80,17 +78,18 @@ var levels = [level1, level2, level3, level4];
 var solutionImages = [];
 
 function generateSolutionTrack() {
+    console.log("this is a level: " + localStorage.selectedLevel + " track")
     for (var x = 0; x < 4; x++) {
         var randomIndex = Math.floor(Math.random() * 10);
-        if (randomIndex > 0) {
-            var chosenLevel = levels[selectedLevel - 1];
+        if (randomIndex > 1) {
+            var chosenLevel = levels[localStorage.selectedLevel - 1];
             var chosenMeasure = chosenLevel[Math.floor(Math.random() * chosenLevel.length)];
             for (var y = 0; y < chosenMeasure["note"].length; y++) {
                 solutionTrack.push(chosenMeasure["note"][y]);
             }
             solutionImages.push(chosenMeasure["image"]);
         } else {
-            var chosenLevel = levels[(Math.floor(Math.random()) * selectedLevel)];
+            var chosenLevel = levels[Math.floor(Math.random() * localStorage.selectedLevel)];
             var chosenMeasure = chosenLevel[Math.floor(Math.random() * chosenLevel.length)];
             for (var y = 0; y < chosenMeasure["note"].length; y++)
             {
@@ -333,14 +332,16 @@ function populateList() {
         var imgNode = document.createElement("input");
         imgNode.setAttribute("type", "image");
         imgNode.setAttribute("src", "images/" + thumbnail);
-        imgNode.setAttribute("onclick", "loadPage()");
+        imgNode.setAttribute("id", i+1);
         var element = document.getElementById("trackList");
         element.appendChild(para);
         element.appendChild(imgNode);
         para.appendChild(document.createElement("br"));
+        imgNode.onclick = function(){
+            localStorage.selectedLevel = this.id;
+            location.href= 'index.html';
+        };
     }
 }
 
-function loadPage() {
-    location.href = 'index.html';
-}
+
