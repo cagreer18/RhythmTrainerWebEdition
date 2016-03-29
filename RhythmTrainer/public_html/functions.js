@@ -137,6 +137,10 @@ function compareTracks() {
 function toggleResultPopup() {
     element = document.getElementById("overlay");
     element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
+    if(element.style.visibility === "hidden")
+    {
+        location.href = 'TrackSelect.html';
+    }
 }
 
 function generateRhythmSheet(solutionTrack) {
@@ -341,6 +345,14 @@ function populateList() {
             localStorage.selectedLevel = this.id;
             location.href= 'index.html';
         };
+    }
+    
+    function toTrackSelect(){
+            var ok = document.getElementById("OKButton");
+            ok.onclick = function(){
+                location.href= 'index.html';
+            }
+  
     }
 }
 

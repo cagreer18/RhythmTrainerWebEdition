@@ -8,20 +8,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     </head>
 
-    <body onload="isTrackDone()" onresize="resize()">
+    <body onload="isTrackDone();" onresize="resize()">
         <div id="solutionTrackDisplay"></div>
         <div id="wrap">
             <div id="timestamp">
                 <div id="countdown"></div>
             </div>
-            <button id="actionButton" onmousedown="changeActionButtonState()">Start Timer</button>
+            <button id="actionButton" onmousedown="changeActionButtonState();resize()">Start Timer</button>
         </div>
         <div class="overlay" id="overlay">
             <div id="result-popup">
                 <p>Your Results</p>
                 <p id="result"></p>
                 <button id="OKButton" onmousedown="toggleResultPopup()">Ok</button>
-                <button id="refreshButton" onmousedown="reloadPage()">Retry</button>
+                <button id="ResetButton" onmousedown="reloadPage()">Retry</button>
            
             </div>
         </div>
