@@ -78,7 +78,6 @@ var levels = [level1, level2, level3, level4];
 var solutionImages = [];
 
 function generateSolutionTrack() {
-    console.log("this is a level: " + localStorage.selectedLevel + " track")
     for (var x = 0; x < 4; x++) {
         var randomIndex = Math.floor(Math.random() * 10);
         if (randomIndex > 1) {
@@ -343,16 +342,8 @@ function populateList() {
         para.appendChild(document.createElement("br"));
         imgNode.onclick = function(){
             localStorage.selectedLevel = this.id;
-            location.href= 'index.html';
+            location.href= 'index.php';
         };
-    }
-    
-    function toTrackSelect(){
-            var ok = document.getElementById("OKButton");
-            ok.onclick = function(){
-                location.href= 'index.html';
-            }
-  
     }
 }
 

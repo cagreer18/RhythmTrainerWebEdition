@@ -8,7 +8,7 @@
     </head>
 
     <body onload="isTrackDone()">
-        echo($_GET['selectedLevel']);
+        
         <div id="solutionTrackDisplay"></div>
         <div id="wrap">
             <div id="timestamp">
