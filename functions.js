@@ -77,6 +77,7 @@ var level4 = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12];
 var levels = [level1, level2, level3, level4];
 var solutionImages = [];
 
+// Used in isTrackDone() which is called onload() in index.php
 function generateSolutionTrack() {
     for (var x = 0; x < 4; x++) {
         var randomIndex = Math.floor(Math.random() * 10);
@@ -99,6 +100,7 @@ function generateSolutionTrack() {
     }
 }
 
+// Called onload in index.php
 function isTrackDone() {
     generateSolutionTrack();
     generateRhythmSheet(solutionTrack);
@@ -115,6 +117,7 @@ function isTrackDone() {
     }, 1);
 }
 
+// Called in isTrackDone() after the the track is expected to be over.
 function compareTracks() {
     percentage = accurateHits / solutionTrack.length;
     if (percentage <= 0.6) {
@@ -133,6 +136,8 @@ function compareTracks() {
     document.getElementById("result").innerHTML = "You got: " + accurateHits + "/" + solutionTrack.length + "\nThat's a(n): " + letterGrade;
 }
 
+
+// Used in isTrackDone() after the track is expected to be over and compareTracks() is finished
 function toggleResultPopup() {
     element = document.getElementById("overlay");
     element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
@@ -142,6 +147,7 @@ function toggleResultPopup() {
     }
 }
 
+// Used in isTrackDone() and generates a rhythm track after the solution track is determined
 function generateRhythmSheet(solutionTrack) {
     rhythmSheet[0] = 0;
     for (var i = 0; i < solutionTrack.length; i++) {
@@ -158,6 +164,7 @@ function generateRhythmSheet(solutionTrack) {
     topOfRestQueueDuration = rests.shift();
 }
 
+// Used in changeActionButtonState is called only if the game has not started  
 function start() {
     addImages();
     for (var i = 0; i < solutionTrack.length; i++) {
@@ -167,6 +174,8 @@ function start() {
     countdown();
 }
 
+
+// Used when the size is changed and when the images load
 function resize() {
     var notes = document.getElementsByClassName("notation");
     for (var x = 0; x < notes.length; x++) {
@@ -177,6 +186,7 @@ function resize() {
     }
 }
 
+// Used in start() 
 function addImages() {
     for (var x = 0; x < solutionImages.length; x++) {
         var barline = document.createElement("img");
@@ -224,6 +234,7 @@ function addImages() {
     para.appendChild(barline);
 }
 
+// Used at the end of start()
 function countdown() {
     document.getElementById("countdown").style.display = "block";
     var countdownTimer = 5;
@@ -241,15 +252,19 @@ function countdown() {
             }, 1000);
 }
 
+// Used after the countdown is finished in countdown()
 function playTrack() {
     document.getElementById("timestamp").innerHTML = "";
     accurateTimer();
 }
 
+// Called after the retry button is pressed
 function reloadPage() {
     location.reload();
 }
 
+
+// Used in playTrack() and to represent elapsedTime
 function accurateTimer() {
     var start = new Date().getTime();
     elapsed = '0.0';
@@ -259,6 +274,7 @@ function accurateTimer() {
     }, 10);
 }
 
+// Called in index.php in order to populate the game screen
 var topOfRestQueue;
 var topOfRestQueueDuration;
 function appendToDiv() {
@@ -269,7 +285,7 @@ function appendToDiv() {
         if (currentInput >= (topOfQueue - buffer) && currentInput <= (topOfQueue + buffer)) {
             accurateHits++;
             bongo.play();
-        }
+         }
         topOfQueue = notes.shift();
     }
     while (currentInput >= topOfRestQueue) {
@@ -292,6 +308,8 @@ window.addEventListener('keydown', function (event) {
     }
 }, false);
 
+
+// Called onclick of the 'actionButton'
 function changeActionButtonState() {
     if (trackEnded) {
         document.getElementById("actionButton").disabled = true;
@@ -305,6 +323,8 @@ function changeActionButtonState() {
     }
 }
 
+
+// Called on load to create the list in TrackSelect.html
 var levelNote;
 function populateList() {
     var thumbnail;
