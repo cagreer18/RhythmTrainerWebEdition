@@ -7,24 +7,41 @@ and open the template in the editor.
 -->
 
  <?php 
-$link = mysql_connect('willshar.ipowermysql.com', 'willshar', 'willshar'); 
-if (!$link) { 
-    die('Could not connect: ' . mysql_error()); 
-} 
-echo 'Connected successfully'; 
-mysql_select_db(rhythm_trainer); 
-if($_POST) {
-        $sql = "SELECT * FROM User WHERE email='$_POST[email]' AND password=SHA1('$_POST[password]')";
-        $result = mysql_query($sql);
-        $data = mysql_fetch_array($result);
-        if(mysql_num_rows($result) == 1) {
-          
-            header('Location: http://willshar.ipower.com/rhythmtrainer/TrackSelect.html');
-        } else {
-            echo "<p style='background-color:red;display:inline;'>Wrong Username or Password</p>";
-        }
-    }
-?> 
+session_start();
+include_once 'Dbconnect.php';
+
+if(isset($_SESSION['email'])!="")
+{
+ header("Location: TrackSelect.html");
+}
+if(isset($_POST['btn-login']))
+{
+ $email = ($_POST['email']);
+ $upass = ($_POST['password']);
+ $res=mysql_query("SELECT * FROM User WHERE email='$email'");
+
+ $row=mysql_fetch_array($res);
+ echo sha1($upass);
+
+if($row['password']==sha1($upass))
+ {
+  $_SESSION['email'] = $row['email'];
+
+  header("Location: TrackSelect.html");
+
+  exit();
+
+ }
+ else
+ {
+  ?>
+  
+        <script>alert('wrong details');</script>
+        <?php
+ }
+ 
+}
+?>
 <html>
     <head>
         <title>Rhythm Trainer</title>
@@ -38,8 +55,8 @@ if($_POST) {
             <form method="post" action="LoginScreen.php">
                 <input name="email" class="inputfield" type="text" placeholder="Email">
                 <input name="password" class="inputfield" type="password" placeholder="Password">
-                <button type="submit" > Login</button>
-                
+                <button name = "btn-login" type="submit" > Login</button>
+                <a href="register.php">Register new account</a>
 
                
     
@@ -48,4 +65,3 @@ if($_POST) {
         </div>
     </body>
 </html>
-
