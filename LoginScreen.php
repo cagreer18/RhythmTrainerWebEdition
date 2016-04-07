@@ -1,19 +1,13 @@
-
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
- <?php 
+<?php
 session_start();
 include_once 'Dbconnect.php';
-
 if(isset($_SESSION['email'])!="")
 {
  header("Location: TrackSelect.html");
 }
+
+
 if(isset($_POST['btn-login']))
 {
  $email = ($_POST['email']);
@@ -22,24 +16,16 @@ if(isset($_POST['btn-login']))
 
  $row=mysql_fetch_array($res);
  echo sha1($upass);
-
 if($row['password']==sha1($upass))
  {
   $_SESSION['email'] = $row['email'];
+echo "<meta http-equiv=\"refresh\" content=\"0;URL=TrackSelect.html\">";
 
-  header("Location: TrackSelect.html");
+}
+else
+{
 
-  exit();
-
- }
- else
- {
-  ?>
-  
-        <script>alert('wrong details');</script>
-        <?php
- }
- 
+ } 
 }
 ?>
 <html>
