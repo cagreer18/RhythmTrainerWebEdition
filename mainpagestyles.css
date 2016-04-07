@@ -1,0 +1,36 @@
+body{
+  background-color: #667DBA;
+  font-family: 'Montserrat', sans-serif;
+}
+
+#gameTitle{
+  color: #C2D5DE;
+}
+
+#subtitle{
+  color: #C2D5DE;
+}
+
+a.b{
+  -webkit-align-self: center; /* Safari 7.0+ */
+    align-self: center;
+    border-radius: 25px;
+    display: block;
+    margin: auto;
+    margin-top:5px;
+    margin-bottom:5px;
+    width: 40%;
+    height: 50%;
+    border: none;
+    background: #AD3EB0;
+    color: white;
+    font-size: 28pt;
+    text-align: center;
+}
+
+footer{
+  font-size:12px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+

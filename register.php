@@ -31,25 +31,30 @@ if(isset($_POST['btn-signup']))
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login & Registration System</title>
-<link rel="stylesheet" href="style.css" type="text/css" />
+<link rel="stylesheet" href="RegisterStyles.css" type="text/css" />
 
 </head>
 <body>
 <center>
+<h2 id="label">
+<center>
+  Create Account
+</center>
+</h2>
 <div id="login-form">
 <form method="post">
 <table align="center" width="30%" border="0">
 <tr>
-<td><input type="email" name="email" placeholder="Your Email" required /></td>
+<td><center><input class="field" type="email" name="email" placeholder="Your Email" required /></center></td>
 </tr>
 <tr>
-<td><input type="password" name="pass" placeholder="Your Password" required /></td>
+<td><center><input class="field" type="password" name="pass" placeholder="Your Password" required /></center></td>
 </tr>
 <tr>
-<td><button type="submit" name="btn-signup">Sign Me Up</button></td>
+<td><center><button class="field" type="submit" name="btn-signup">Sign Me Up</button></center></td>
 </tr>
 <tr>
-<td><a href="LoginScreen.php">Login</a></td>
+<td><center><a id="login"href="LoginScreen.php">Login</a></center></td>
 </tr>
 </table>
 </form>

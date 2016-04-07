@@ -7,7 +7,4 @@ if(!mysql_select_db("rhythm_trainer"))
 {
      die('oops database selection problem ! --> '.mysql_error());
 }
-{
-echo 'Connected SUCESS!!!!!!!';
-}
 ?>

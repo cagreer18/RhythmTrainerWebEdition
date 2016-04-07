@@ -15,7 +15,7 @@ if(isset($_POST['btn-login']))
  $res=mysql_query("SELECT * FROM User WHERE email='$email'");
 
  $row=mysql_fetch_array($res);
- echo sha1($upass);
+
 if($row['password']==sha1($upass))
  {
   $_SESSION['email'] = $row['email'];
@@ -24,8 +24,10 @@ echo "<meta http-equiv=\"refresh\" content=\"0;URL=TrackSelect.html\">";
 }
 else
 {
-
- } 
+    ?>
+  <script> alert("Invalid username and/or password.");</script> 
+  <?php   
+} 
 }
 ?>
 <html>
@@ -41,8 +43,8 @@ else
             <form method="post" action="LoginScreen.php">
                 <input name="email" class="inputfield" type="text" placeholder="Email">
                 <input name="password" class="inputfield" type="password" placeholder="Password">
-                <button name = "btn-login" type="submit" > Login</button>
-                <a href="register.php">Register new account</a>
+                <center><button name = "btn-login" type="submit" > Login</button></center>
+                <center><a href="register.php">Register new account</a></center>
 
                
     

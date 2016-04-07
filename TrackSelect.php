@@ -14,5 +14,10 @@
     <body onload="populateList()">
         <div class="trackList" id ="trackList">
         </div>
-    </body>
+    </body>  <div id="right">
+     <div id="content">
+         hi' <?php echo $userRow['username']; ?>&nbsp;<a href="Logout.php?logout">Sign Out</a>
+        </div>
+    </div>
+     
 </html>
