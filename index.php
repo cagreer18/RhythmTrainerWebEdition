@@ -1,11 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rhythm Trainer</title>
+       
+        <link rel="stylesheet" type="text/css" href="GameScreenStyles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </head>
+
+    <body onload="isTrackDone()">
+        
+        <div id="solutionTrackDisplay"></div>
+        <div id="wrap">
+            <div id="timestamp">
+                <div id="countdown"></div>
+            </div>
+            <button id="actionButton" onmousedown="changeActionButtonState()">Start Timer</button>
+        </div>
+        <div class="overlay" id="overlay">
+            <div id="result-popup">
+                <p>Your Results</p>
+                <p id="result"></p>
+                <button id="OKButton" onmousedown="toggleResultPopup()">Ok</button>
+                <button id="refreshButton" onmousedown="reloadPage()">Retry</button>
+
+            </div>
+        </div>
+    </body>
+</html>
 <?php
-    include "functions.php";
+    include ("functions.php");
     function generateSolutionTrack() {
     for ($x = 0; $x < 4; $x++) {
          $randomIndex = rand(0,9);
         if ($randomIndex > 1) {
             $chosenLevel = $levels[$_GET["selectedLevel"] - 1];
-            $chosenMeasure = $chosenLevel[rand(0,count($chosenLevel)) ];
+            $chosenMeasure = $chosenLevel[rand(0,count($chosenLevel))];
             for ($y = 0; $y < count($chosenMeasure.notes()); $y++) {
                 array_push($solutionTrack, $chosenMeasure.notes()[$y]);
             }
@@ -25,21 +54,21 @@
 function isTrackDone() {
     generateSolutionTrack();
     generateRhythmSheet($solutionTrack);
-    ?>
-    <script>
-    checker = setInterval(function () {
-       <?php if ($elapsed > $rhythmSheet[count($rhythmSheet) - 1] + 1) {
-            clearInterval($elapsed);
-            $elapsed = 0;
+    
+    echo "<script>
+    var checker = setInterval(function () {
+        if (".$elapsed." > ".$rhythmSheet[count($rhythmSheet) - 1]." + 1){
+            clearInterval(".$elapsed.");
+            ".$elapsed = 0.";
             compareTracks();
-            toggleResultPopup(); ?>
+            toggleResultPopup();
             clearInterval(checker);
             metronomeTrack.pause();
-      <?php $trackEnded = true;
+            ".$trackEnded = true.";
             
-        } ?>
-    }, 1); </script>
-    <?php
+        } 
+    }, 1); </script>";
+    
 }
 
 function compareTracks() {
@@ -70,8 +99,8 @@ function toggleResultPopup() {
     element.style.visibility = (element.style.visibility === 'visible') ? 'hidden' : 'visible';
     if(element.style.visibility === 'hidden')
     {
-     </script> <meta http-equiv=\'refresh\' content=\'0;URL=TrackSelect.html\'>
-    }";
+     
+    }</script>";
 }
 
 function generateRhythmSheet($solutionTrack) {
@@ -92,32 +121,35 @@ function generateRhythmSheet($solutionTrack) {
 
 function start() {
     addImages();
+
     for ($i = 0; $i < count($solutionTrack); $i++) {
-        echo "<script>var element = document.getElementById('solutionTrackDisplay');";
-        echo "element.appendChild(para);</script>";
+        echo "<script>
+        var para = document.createElement('p');
+        var element = document.getElementById('solutionTrackDisplay');
+         element.appendChild(para);</script>";
     }
     countdown();
 }
 
 //might be wrong
-function resize() { ?>
-    <script>
-    var notes = document.getElementsByClassName("notation");
+function resize() { 
+   echo "<script>
+    var notes = document.getElementsByClassName('notation');
     for (var x = 0; x < notes.length; x++) {
         var newImage = new Image();
-        newImage.src = <?php $notes ?>[x].getAttribute("src");
+        newImage.src =  ".$notes."[x].getAttribute('src');
         var width = document.body.clientWidth / 1366 * newImage.width;
-       <?php $notes ?> [x].style.width = width + "px"; 
-    } </script>
+        ".$notes." [x].style.width = width + 'px'; 
+    } </script>";
 
-<?php 
+ 
 }
 function addImages() {
-    for ($x = 0; $x < count($solutionImages); $x++) {
+   echo "<script> for (var x = 0; x <".count($solutionImages)."; $x++) {
         
         
-        echo "<script> barline = document.createElement('img');
-        'barline.setAttribute('class', 'notation');
+        barline = document.createElement('img');
+        barline.setAttribute('class', 'notation');
         switch (x) {
             case 0:
                 barline.setAttribute('src', 'images/perc_clef.jpg');
@@ -150,16 +182,16 @@ function addImages() {
         }
         var measure = document.createElement('img');
         measure.setAttribute('class', 'notation');
-        measure.setAttribute('src', 'images/'' + solutionImages[x]);
-        measure.setAttribute('onload', 'resize()');
+        measure.setAttribute('src', 'images/' + solutionImages[x]);
+        measure.setAttribute('onload', '".resize()."');
         para.appendChild(measure);
     }
     barline = document.createElement('img');
     barline.setAttribute('class', 'notation');
     barline.setAttribute('src', 'images/bar_line_final.jpg');
-    barline.setAttribute('onload', 'resize()'');
+    barline.setAttribute('onload', '".resize()."');
     para.appendChild(barline);
-    </script>;";
+    </script>";
   
 }
 
@@ -184,16 +216,17 @@ function countdown() {
 
 function playTrack() {
     echo "<script>document.getElementById('timestamp').innerHTML = '';
-    accurateTimer();
+     </script>";
+     accurateTimer();
 }
 
 // Called after the retry button is pressed
 function reloadPage() {
-    location.reload();</script>"
+    echo "<script>location.reload();</script>";
 }
 
 function appendToDiv() {
-    $dom = new DOMElement();
+    $dom = new DOMDocument();
     $dom->load('index.php');
     $para = $dom->createElement("p");
     $node = $dom->createTextNode($elapsed);
@@ -225,7 +258,7 @@ function accurateTimer() {
     window.setInterval(function () {
         var time = new Date().getTime() - start;
         elapsed = Math.floor(time);
-    }, 10);</script>"
+    }, 10);</script>";
 }
 
 
@@ -250,34 +283,3 @@ function changeActionButtonState() {
     }
 }
 ?>
-
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rhythm Trainer</title>
-       
-        <link rel="stylesheet" type="text/css" href="GameScreenStyles.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    </head>
-
-    <body onload="isTrackDone()">
-        
-        <div id="solutionTrackDisplay"></div>
-        <div id="wrap">
-            <div id="timestamp">
-                <div id="countdown"></div>
-            </div>
-            <button id="actionButton" onmousedown="changeActionButtonState()">Start Timer</button>
-        </div>
-        <div class="overlay" id="overlay">
-            <div id="result-popup">
-                <p>Your Results</p>
-                <p id="result"></p>
-                <button id="OKButton" onmousedown="toggleResultPopup()">Ok</button>
-                <button id="refreshButton" onmousedown="reloadPage()">Retry</button>
-
-            </div>
-        </div>
-    </body>
-</html>
