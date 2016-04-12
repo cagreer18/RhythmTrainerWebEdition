@@ -355,7 +355,10 @@ function populateList() {
         var imgNode = document.createElement("input");
         imgNode.setAttribute("type", "image");
         imgNode.setAttribute("src", "images/" + thumbnail);
+        imgNode.setAttribute("class" "notation");
+        imgNode.setAttribute("onload","resize()");
         imgNode.setAttribute("id", i+1);
+
         var element = document.getElementById("trackList");
         element.appendChild(para);
         element.appendChild(imgNode);

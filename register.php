@@ -30,35 +30,33 @@ if(isset($_POST['btn-signup']))
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Login & Registration System</title>
 <link rel="stylesheet" href="RegisterStyles.css" type="text/css" />
+<title>Login & Registration System</title>
+<link rel="stylesheet" href="style.css" type="text/css" />
 
 </head>
 <body>
 <center>
-<h2 id="label">
-<center>
-  Create Account
-</center>
-</h2>
 <div id="login-form">
 <form method="post">
 <table align="center" width="30%" border="0">
 <tr>
-<td><center><input class="field" type="email" name="email" placeholder="Your Email" required /></center></td>
+<td><input type="email" name="email" placeholder="Your Email" required /></td>
 </tr>
 <tr>
-<td><center><input class="field" type="password" name="pass" placeholder="Your Password" required /></center></td>
+<td><input type="password" name="pass" placeholder="Your Password" required /></td>
 </tr>
 <tr>
-<td><center><button class="field" type="submit" name="btn-signup">Sign Me Up</button></center></td>
+<td><button type="submit" name="btn-signup">Sign Me Up</button></td>
 </tr>
 <tr>
-<td><center><a id="login"href="LoginScreen.php">Login</a></center></td>
+<td><a href="LoginScreen.php">Login</a></td>
 </tr>
 </table>
 </form>
 </div>
 </center>
 </body>
+ <footer><p>Credits: Concept by <a href="http//:lovelythinking.com">Dr. Wiley</a>      Develeopment Team: Coul Greer, Kevin Hannan, Bradford Barclay, Collin Clayton</p>
+             </footer>
 </html>

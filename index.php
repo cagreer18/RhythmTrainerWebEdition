@@ -51,25 +51,7 @@
     }
 }
 
-function isTrackDone() {
-    generateSolutionTrack();
-    generateRhythmSheet($solutionTrack);
-    
-    echo "<script>
-    var checker = setInterval(function () {
-        if (".$elapsed." > ".$rhythmSheet[count($rhythmSheet) - 1]." + 1){
-            clearInterval(".$elapsed.");
-            ".$elapsed = 0.";
-            compareTracks();
-            toggleResultPopup();
-            clearInterval(checker);
-            metronomeTrack.pause();
-            ".$trackEnded = true.";
-            
-        } 
-    }, 1); </script>";
-    
-}
+
 
 function compareTracks() {
     $percentage = $accurateHits / count($solutionTrack);
