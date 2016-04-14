@@ -11,7 +11,7 @@ body{
   color: #C2D5DE;
 }
 
-a.b{
+.button {
   -webkit-align-self: center; /* Safari 7.0+ */
     align-self: center;
     border-radius: 25px;
@@ -28,9 +28,7 @@ a.b{
     text-align: center;
 }
 
-footer{
-  font-size:12px;
-  font-family: 'Montserrat', sans-serif;
+footer {
+  position: absolute;
+  bottom: 0;
 }
-
-

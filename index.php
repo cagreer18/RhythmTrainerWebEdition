@@ -2,13 +2,10 @@
 <html>
     <head>
         <title>Rhythm Trainer</title>
-       
-        <link rel="stylesheet" type="text/css" href="GameScreenStyles.css">
+        <link rel="stylesheet" type="text/css" href="GameScreenStyles.css?<?php echo date('l jS \of F Y h:i:s A'); ?>" type="text/css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     </head>
-
     <body onload="isTrackDone()">
-        
         <div id="solutionTrackDisplay"></div>
         <div id="wrap">
             <div id="timestamp">
@@ -22,16 +19,18 @@
                 <p id="result"></p>
                 <button id="OKButton" onmousedown="toggleResultPopup()">Ok</button>
                 <button id="refreshButton" onmousedown="reloadPage()">Retry</button>
-
             </div>
         </div>
+        <footer>
+            <p>Credits: Concept by: <a href="http://lovelythinking.com">Dr. Wiley</a>  Develeopment Team: Coul Greer, Kevin Hannan, Bradford Barclay, Collin Clayton</p>
+        </footer>
     </body>
 </html>
 <?php
     include ("functions.php");
     function generateSolutionTrack() {
     for ($x = 0; $x < 4; $x++) {
-         $randomIndex = rand(0,9);
+        $randomIndex = rand(0,9);
         if ($randomIndex > 1) {
             $chosenLevel = $levels[$_GET["selectedLevel"] - 1];
             $chosenMeasure = $chosenLevel[rand(0,count($chosenLevel))];
@@ -50,8 +49,6 @@
         }
     }
 }
-
-
 
 function compareTracks() {
     $percentage = $accurateHits / count($solutionTrack);
@@ -103,7 +100,6 @@ function generateRhythmSheet($solutionTrack) {
 
 function start() {
     addImages();
-
     for ($i = 0; $i < count($solutionTrack); $i++) {
         echo "<script>
         var para = document.createElement('p');
@@ -123,9 +119,8 @@ function resize() {
         var width = document.body.clientWidth / 1366 * newImage.width;
         ".$notes." [x].style.width = width + 'px'; 
     } </script>";
-
- 
 }
+
 function addImages() {
    echo "<script> for (var x = 0; x <".count($solutionImages)."; $x++) {
         
@@ -174,9 +169,7 @@ function addImages() {
     barline.setAttribute('onload', '".resize()."');
     para.appendChild(barline);
     </script>";
-  
 }
-
 
 function countdown() {
     echo "<script>document.getElementById('countdown').style.display = 'block';

@@ -1,22 +1,16 @@
-body{
+body {
   background-color:#8038BA;
   font-family: 'Montserrat', sans-serif;
 }
-#login-form{
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+}
+
+#login-form {
   padding:5px;
   border-radius:25px;
   background-color:#4A3CA3;
-}
-
-input.field{
-  margin:auto;
-  border-radius:25px;
-}
-
-#label{
-    font-family: 'Montserrat', sans-serif;
-}
-
-#login{
-  color:#C2D5DE
 }

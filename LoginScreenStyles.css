@@ -1,19 +1,25 @@
-body{
+body {
   background-color:#4A3CA3;
+  font-family: 'Montserrat', sans-serif;
 }
 
-div{
+div {
     padding:5px;
     background-color:#AD3EB0;
     border-radius: 25px;
 }
 
+footer {
+  position: absolute;
+  bottom: 0;
+}
+
 .inputfield{
-    top-margin:5px;
-    margin:5px auto;
-    display:block;
-    background-color:#667DBA;
-    color:#C2D5DE;  
+  top-margin:5px;
+  margin:5px auto;
+  display:block;
+  background-color:#667DBA;
+  color:#C2D5DE;  
 }
 
 ::-webkit-input-placeholder { /* Chrome */
@@ -30,5 +36,3 @@ div{
   color:#C2D5DE;
   opacity: 1;
 }
-
-

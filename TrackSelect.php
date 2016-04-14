@@ -51,16 +51,15 @@ function populateList() {
         <title>Rhythm Trainer</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="TrackSelectStyles.css">
-        
+        <link rel="stylesheet" type="text/css" href="TrackSelectStyles.css?<?php echo date('l jS \of F Y h:i:s A'); ?>" type="text/css">
     </head>
     <body onload="populateList()">
-        <div class="trackList" id ="trackList">
+        <div class="trackList" id ="trackList"></div>
+        <footer>
+            <p>Credits: Concept by <a href="http://lovelythinking.com">Dr. Wiley</a> Develeopment Team: Coul Greer, Kevin Hannan, Bradford Barclay, Collin Clayton</p>
+        </footer>
+    </body> 
+        <div class="content right">
+            <?php echo $userRow['username']; ?>&nbsp;<a href="Logout.php?logout">Sign Out</a>
         </div>
-    </body>  <div id="right">
-     <div id="content">
-         hi' <?php echo $userRow['username']; ?>&nbsp;<a href="Logout.php?logout">Sign Out</a>
-        </div>
-    </div>
-
 </html>
