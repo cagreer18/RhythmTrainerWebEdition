@@ -38,7 +38,7 @@ function populateList() {
         $element->appendChild($para);
         $element->appendChild($imgNode);
         $para->appendChild($dom->createElement("br"));
-        $imgNode.onclick = function(){
+        $imgNode.onclick() = function(){
             $_GET["selectedLevel"] = $i+1;
           echo "<meta http-equiv=\"refresh\" content=\"0;URL=index.php\">";
         };
