@@ -106,7 +106,6 @@ function isTrackDone() {
     generateRhythmSheet(solutionTrack);
     checker = setInterval(function () {
         if (elapsed > rhythmSheet[rhythmSheet.length - 1] + 1) {
-            clearInterval(elapsed);
             elapsed = 0;
             compareTracks();
             toggleResultPopup();
@@ -359,6 +358,9 @@ function populateList() {
         imgNode.setAttribute("onload","resize()");
         imgNode.setAttribute("id", i+1);
 
+        document.getElementsByTagName("footer")[0].style.position = absolute;
+        document.getElementsByTagName("footer")[0].style.bottom = 0;
+
         var element = document.getElementById("trackList");
         element.appendChild(para);
         element.appendChild(imgNode);
@@ -369,5 +371,3 @@ function populateList() {
         };
     }
 }
-
-
