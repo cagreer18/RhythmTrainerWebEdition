@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
 <?php
-    include ("functions.php");
+    include ('functions.php');
 
     function generateNotes() {
+        global $levels;
         $solutionTrack = array();
         for ($x = 0; $x < 4; $x++) {
             $randomIndex = rand(0, 9);
@@ -15,8 +16,8 @@
                 }
                 array_push($solutionImages, $chosenMeasure.imageUrl());
             } else {
-                $chosenLevel = $levels[rand($_GET["selectedLevel"])];
-                $chosenMeasure = $chosenLevel[rand(0,count($chosenLevel))];
+                $chosenLevel = $levels[rand(0, $_GET["selectedLevel"])];
+                $chosenMeasure = $chosenLevel[rand(0, count($chosenLevel))];
                 for ($y = 0; $y < count($chosenMeasure.notes()); $y++) {
                     array_push($solutionTrack, $chosenMeasure.notes()[$y]);
                 }
@@ -28,52 +29,29 @@
     }
 
     function addImages() {
-       echo "<script> for (var x = 0; x <".count($solutionImages)."; $x++) {
-            barline = document.createElement('img');
-            barline.setAttribute('class', 'notation');
-            switch (x) {
-                case 0:
-                    barline.setAttribute('src', 'images/perc_clef.jpg');
-                    para.appendChild(barline);
-                    barline = document.createElement('img');
-                    barline.setAttribute('class', 'notation');
-                    barline.setAttribute('src', 'images/4-4_time_signature_1.jpg');
-                    para.appendChild(barline);
-                    break;
-                case 1:
-                    barline.setAttribute('src', 'images/bar_line.jpg');
-                    para.appendChild(barline);
-                    break;
-                case 2:
-                    barline.setAttribute('src', 'images/bar_line.jpg');
-                    para.appendChild(barline);
-                    para.appendChild(document.createElement('br'));
-                    barline = document.createElement('img');
-                    barline.setAttribute('class', 'notation');
-                    barline.setAttribute('src', 'images/perc_clef.jpg');
-                    para.appendChild(barline);
-                    break;
-                case 3:
-                    barline.setAttribute('src', 'images/bar_line.jpg');
-                    para.appendChild(barline);
-                    break;
+       for ($x = 0; $x < count($solutionImages); $x++) {
+            switch ($x) {
+                case 0: ?>
+                    <img src="<?php echo "images/perc_clef.jpg"; ?>" class="notation" >
+                    <img src="images/4-4_time_signature_1.jpg" class="notation" >
+                    <?php break;
+                case 1: ?>
+                    <img src="<?php echo "images/bar_line.jpg"; ?>" class="notation" >
+                    <?php break;
+                case 2: ?>
+                    <img src="<?php echo "images/bar_line.jpg"; ?>" class="notation" >
+                    <img src="<?php echo "images/perc_clef.jpg"; ?>" class="notation" >
+                    <?php break;
+                case 3: ?>
+                    <img src="<?php echo "images/bar_line.jpg"; ?>" class="notation" >
+                    <?php break;
                 default:
                     break;
-
-            }
-            var measure = document.createElement('img');
-            measure.setAttribute('class', 'notation');
-            measure.setAttribute('src', 'images/' + solutionImages[x]);
-            measure.setAttribute('onload', '".resize()."');
-            para.appendChild(measure);
-        }
-        barline = document.createElement('img');
-        barline.setAttribute('class', 'notation');
-        barline.setAttribute('src', 'images/bar_line_final.jpg');
-        barline.setAttribute('onload', '".resize()."');
-        para.appendChild(barline);
-        </script>";
-    }
+            } ?>
+            <img src="<?php echo 'images/$solutionImages[$x]'; ?>" onload="<?php resize() ?>" class="notation" >
+        <?php } ?>
+        <img src="<?php echo "images/bar_line_final.jpg"; ?>" onload="<?php resize() ?>" class="notation" >
+    <?php }
 
     function resize() { 
        echo "<script>
@@ -105,6 +83,7 @@
     }
 
     function countdown() {
+        global $trackStarted;
         echo "<script>document.getElementById('countdown').style.display = 'block';
         var countdownTimer = 5;
         var timer = setInterval(
@@ -113,7 +92,7 @@
                 countdownTimer--;
                 metronomeTrack.play();
                 if(countdownTimer <= 0) {
-                    trackStarted = true;
+                    $trackStarted = true;
                     clearInterval(timer);
                     document.getElementById('timestamp').innerHTML = '';
                     beginStopwatch()
@@ -134,7 +113,7 @@
                     <?php compareTracks(); ?>
                     <?php toggleResultPopup(); ?>
                     clearInterval(checker);
-                    trackEnded = true;
+                    $trackEnded = true;
                     metronomeTrack.pause();
                 }
             }, 1);
@@ -199,7 +178,10 @@
         $element = $dom->getElementById("timestamp");
         $element->appendChild($para);
     }
+
     function changeActionButtonState() {
+        global $trackStarted;
+        global $trackEnded;
         if ($trackEnded) {
            echo "<script> document.getElementById('actionButton').disabled = true;</script>";
         } else if (!$trackStarted) {
@@ -211,10 +193,13 @@
         }
     }
 
+
+    global $trackStarted;
+    global $trackEnded;
     echo "<script>
         window.addEventListener('keydown', function (event) {
-            if (trackStarted && event.keyCode == 32 && !trackEnded) {
-                grade();
+            if ($trackStarted && event.keyCode == 32 && !$trackEnded) {
+                grade(); 
             }
         }, false);
     </script>";
