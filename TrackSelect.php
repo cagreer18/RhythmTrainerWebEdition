@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 
-<?php
-    include ('functions.php');
-?>
+<?php include ('functions.php'); ?>
 
 <html>
     <head>
@@ -16,7 +14,7 @@
             <?php
             $levelNote;
             $thumbnail;
-            for ($i = 1; $i <= 4; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
                 switch ($i) {
                     case 1:
                         $levelNote = "Whole Note";
@@ -33,6 +31,10 @@
                     case 4:
                         $levelNote = "Quarter Note";
                         $thumbnail = "q1.jpg";
+                        break;
+                    case 5:
+                        $levelNote = "Eighth Note";
+                        $thumbnail = "e1.jpg";
                         break;
                     default:
                         break;

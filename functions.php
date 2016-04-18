@@ -1,7 +1,7 @@
 <?php
 	class Notes{
-	 	public $duration;
-	 	public $type;
+	 	private $duration;
+	 	private $type;
 	 
 	 	function __construct($duration, $type){	
 	 		$this->duration = $duration;
@@ -9,11 +9,11 @@
 	 	}
 
 		function duration(){
-			return $duration;
+			return $this->duration;
 		}
 
 		function type(){
-			return $type;
+			return $this->type;
 		}
 	}
 	 
@@ -58,15 +58,15 @@
 ?> 
  
 <script>
-	var metronomeTrack = new Audio("audio/4-4_60bpmMetronome.mp3");
+	var metronomeTrack = new Audio("audio/metronome_click_60bpm.mp3");
 	var bongo = new Audio("audio/Bongo.mp3");
 	var shush = new Audio("audio/Shush.wav");
 </script>
 
 <?php
  	class Measure {
- 		public $imageUrl;
- 		public $notes = array();
+ 		private $imageUrl;
+ 		private $notes = array();
  
  		function __construct($imageUrl, $notes) {
  			$this->imageUrl = $imageUrl;
@@ -74,11 +74,11 @@
  		}
  
  		function imageUrl() {
- 			return $imageUrl;
+ 			return $this->imageUrl;
  		}
  
  		function notes() {
- 			return $notes;
+ 			return $this->notes;
  		}
  	}
  
@@ -128,8 +128,8 @@
  	$e20 = new Measure("e20.jpg", array($eNote, $eNote, $qRest, $hNote));
  	$e21 = new Measure("e21.jpg", array($eNote, $eNote, $qRest, $qRest, $eNote, $eNote));
  	$e22 = new Measure("e22.jpg", array($qNote, $qRest, $qNote, $eRest, $eRest));
- 	$e23 = new Measure ("e23.jpg", array($qNote, $qNote, $qNote, $eNote, $eNote));
- 	$e24 = new Measure("e24.jpg", array($qNote, $qNote, $eNote, $eNote, $qNote))
+ 	$e23 = new Measure("e23.jpg", array($qNote, $qNote, $qNote, $eNote, $eNote));
+ 	$e24 = new Measure("e24.jpg", array($qNote, $qNote, $eNote, $eNote, $qNote));
  	$e25 = new Measure("e25.jpg", array($qNote, $eNote, $eNote, $qNote, $qNote));
  	$e26 = new Measure("e26.jpg", array($qNote, $eNote, $eNote, $eNote, $eNote, $qNote));
  	$e27 = new Measure("e27.jpg", array($eNote, $qNote, $eNote, $qRest));

@@ -10,18 +10,20 @@
             $randomIndex = rand(0, 9);
             if ($randomIndex > 1) {
                 $chosenLevel = $levels[$_GET["selectedLevel"] - 1];
-                $chosenMeasure = $chosenLevel[rand(0, count($chosenLevel))];
-                for ($y = 0; $y < count($chosenMeasure.notes()); $y++) {
-                    array_push($solutionTrack, $chosenMeasure.notes()[$y]);
+                $chosenMeasure = $chosenLevel[rand(0, count($chosenLevel) - 1)];
+                for ($y = 0; $y < count($chosenMeasure->notes()); $y++) {
+                    array_push($solutionTrack, $chosenMeasure->notes()[$y]);
                 }
-                array_push($solutionImages, $chosenMeasure.imageUrl());
+                global $solutionImages;
+                array_push($solutionImages, $chosenMeasure->imageUrl());
             } else {
                 $chosenLevel = $levels[rand(0, $_GET["selectedLevel"])];
-                $chosenMeasure = $chosenLevel[rand(0, count($chosenLevel))];
-                for ($y = 0; $y < count($chosenMeasure.notes()); $y++) {
-                    array_push($solutionTrack, $chosenMeasure.notes()[$y]);
+                $chosenMeasure = $chosenLevel[rand(0, count($chosenLevel) - 1)];
+                for ($y = 0; $y < count($chosenMeasure->notes()); $y++) {
+                    array_push($solutionTrack, $chosenMeasure->notes()[$y]);
                 }
-                array_push($solutionImages, $chosenMeasure.imageUrl());
+                global $solutionImages;
+                array_push($solutionImages, $chosenMeasure->imageUrl());
             }
         }
         addImages();
@@ -29,7 +31,8 @@
     }
 
     function addImages() {
-       for ($x = 0; $x < count($solutionImages); $x++) {
+        global $solutionImages;
+        for ($x = 0; $x < count($solutionImages); $x++) {
             switch ($x) {
                 case 0: ?>
                     <img src="<?php echo "images/perc_clef.jpg"; ?>" class="notation" >
@@ -48,29 +51,30 @@
                 default:
                     break;
             } ?>
-            <img src="<?php echo 'images/$solutionImages[$x]'; ?>" onload="<?php resize() ?>" class="notation" >
+            <img src="<?php echo 'images/' . $solutionImages[$x]; ?>" onload="<?php resize() ?>" class="notation" >
         <?php } ?>
         <img src="<?php echo "images/bar_line_final.jpg"; ?>" onload="<?php resize() ?>" class="notation" >
     <?php }
 
     function resize() { 
-       echo "<script>
-        var notes = document.getElementsByClassName('notation');
-        for (var x = 0; x < notes.length; x++) {
-            var newImage = new Image();
-            newImage.src =  notes[x].getAttribute('src');
-            var width = document.body.clientWidth / 1366 * newImage.width;
-            notes[x].style.width = width + 'px'; 
-        } </script>";
+       echo "function() {
+            var notes = document.getElementsByClassName('notation');
+            for (var x = 0; x < notes.length; x++) {
+                var newImage = new Image();
+                newImage.src =  notes[x].getAttribute('src');
+                var width = document.body.clientWidth / 1366 * newImage.width;
+                notes[x].style.width = width + 'px'; 
+            }
+        }";
     }
 
     function generateTimestamp($solutionTrack) {
         $rhythmSheet = array(0);
         for ($i = 0; $i < count($solutionTrack); $i++) {
-            $rhythmSheet[$i + 1] = $rhythmSheet[$i] + $solutionTrack[$i].duration();
-            if ($solutionTrack[$i].type() === "rest") {
-                array_push($rests, $rhythmSheet[$i], $solutionTrack[$i].duration());
-            } else if ($solutionTrack[$i].type() === "note") {
+            $rhythmSheet[$i + 1] = $rhythmSheet[$i] + $solutionTrack[$i]->duration();
+            if ($solutionTrack[$i]->type() === "rest") {
+                array_push($rests, $rhythmSheet[$i], $solutionTrack[$i]->duration());
+            } else if ($solutionTrack[$i]->type() === "note") {
                 array_push($notes, $rhythmSheet[$i]);
             }
         }
@@ -86,13 +90,14 @@
         global $trackStarted;
         echo "<script>document.getElementById('countdown').style.display = 'block';
         var countdownTimer = 5;
+        var trackStarted =" . json_encode($trackStarted) ."
         var timer = setInterval(
             function () {
                 document.getElementById('countdown').innerHTML = countdownTimer;
                 countdownTimer--;
                 metronomeTrack.play();
                 if(countdownTimer <= 0) {
-                    $trackStarted = true;
+                    trackStarted = true;
                     clearInterval(timer);
                     document.getElementById('timestamp').innerHTML = '';
                     beginStopwatch()
@@ -193,22 +198,21 @@
         }
     }
 
-
-    global $trackStarted;
-    global $trackEnded;
-    echo "<script>
-        window.addEventListener('keydown', function (event) {
-            if ($trackStarted && event.keyCode == 32 && !$trackEnded) {
-                grade(); 
-            }
-        }, false);
-    </script>";
 ?>
 
 <html>
     <head>
         <title>Rhythm Trainer</title>
         <link rel="stylesheet" type="text/css" href="GameScreenStyles.css?<?php echo date('l jS \of F Y h:i:s A'); ?>" type="text/css">
+        <script type='text/javascript'>
+            window.addEventListener('keydown', function (event) {
+                var trackStarted = <?php echo json_encode($trackStarted); ?>;
+                var trackEnded = <?php echo json_encode($trackEnded); ?>;
+                if (trackStarted && event.keyCode == 32 && !trackEnded) {
+                    grade(); 
+                }
+            }, false);
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     </head>
     <body>
