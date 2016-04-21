@@ -1,6 +1,10 @@
+*{
+  
+  font-family: 'Montserrat', sans-serif;
+}
+
 body{
   background-color: #667DBA;
-  font-family: 'Montserrat', sans-serif;
 }
 
 #gameTitle{
@@ -19,8 +23,6 @@ body{
     margin: auto;
     margin-top:5px;
     margin-bottom:5px;
-    width: 40%;
-    height: 50%;
     border: none;
     background: #AD3EB0;
     color: white;

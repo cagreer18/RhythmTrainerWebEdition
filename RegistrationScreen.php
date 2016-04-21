@@ -11,7 +11,7 @@
 <script> alert('successfully registered '); </script>
 
 <?php } else { ?>
-
+	
 <script> alert('error while registering you...'); </script>
 <?php 
 		}
@@ -47,7 +47,7 @@
 						</tr>
 						<tr>
 							<td>
-								<a href="LoginScreen.php">Login</a>
+								<a href="http://willshare.com/RhythmTrainerWebEdition/Login">Login</a>
 							</td>
 						</tr>
 					</table>

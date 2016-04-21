@@ -10,7 +10,7 @@
         <link rel="stylesheet" type="text/css" href="TrackSelectStyles.css?<?php echo date('l jS \of F Y h:i:s A'); ?>" type="text/css">
     </head>
     <body>
-        <form action="index.php" method="get" class="trackList" id ="trackList">
+        <form action="GameScreen.php" method="get" class="trackList" id ="trackList">
             <?php
             $levelNote;
             $thumbnail;
@@ -44,11 +44,3 @@
                 <br />
             <?php } ?>
         </form>
-        <footer>
-            <p>Credits: Concept by <a href="http://lovelythinking.com">Dr. Wiley</a> Develeopment Team: Coul Greer, Kevin Hannan, Bradford Barclay, Collin Clayton</p>
-        </footer>
-    </body> 
-        <div class="content right">
-            <a href="Logout.php">Sign Out</a>
-        </div>
-</html>

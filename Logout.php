@@ -5,5 +5,5 @@
 		unset($_SESSION['user']);
 	}
 
-	header("Location: LoginScreen.php");
+	header("Location: http://willshare.com/RhythmTrainerWebEdition/Login");
 ?>
