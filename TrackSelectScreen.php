@@ -12,7 +12,7 @@
             <?php
             $levelNote;
             $thumbnail;
-            for ($i = 1; $i <= 5; $i++) {
+            for ($i = 1; $i <= 8; $i++) {
                 switch ($i) {
                     case 1:
                         $levelNote = "Whole Note";
@@ -34,6 +34,18 @@
                         $levelNote = "Eighth Note";
                         $thumbnail = "e1.jpg";
                         break;
+                    case 6:
+                        $levelNote = "Dotted Quarter Note";
+                        $thumbnail = "qd1.jpg";
+                        break;
+                     case 7:
+                        $levelNote = "Sixteenth Note";
+                        $thumbnail = "s1.jpg";
+                        break; 
+                    case 8:
+                        $levelNote = "Dotted Eighth Note";
+                        $thumbnail = "de1.jpg";
+                        break;  
                     default:
                         break;
                 } ?>

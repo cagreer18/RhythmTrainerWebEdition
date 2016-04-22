@@ -175,7 +175,9 @@ var solutionImages = [];
 
 // Used in isTrackDone() which is called onload() in index.php
 function generateSolutionTrack() {
+
     for (var x = 0; x < 4; x++) {
+alert(localStorage.selectedLevel);
         var randomIndex = Math.floor(Math.random() * 10);
         if (randomIndex > 1) {
             var chosenLevel = levels[localStorage.selectedLevel - 1];
