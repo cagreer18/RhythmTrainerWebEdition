@@ -54,12 +54,5 @@
 				</form>
 			</div>
 		</center>
-	<footer>
-		<p>
-			Credits: Concept by 
-			<a href="http://lovelythinking.com">Dr. Wiley</a>
-			Develeopment Team: Coul Greer, Kevin Hannan, Bradford Barclay, Collin Clayton
-		</p>
-	</footer>
 	</body>
 </html>

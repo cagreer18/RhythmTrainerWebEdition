@@ -28,7 +28,7 @@
     $page = $path['call_parts'][0];
 
     switch(strtolower($page)) {
-		case 'trackselect': include('TrackSelectScreen.html');
+		case 'trackselect': include('TrackSelectScreen.php');
 			break;
 		case 'gamescreen': include('GameScreen.php');
 			break;

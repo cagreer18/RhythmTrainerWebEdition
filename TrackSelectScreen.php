@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 
-<?php include ('functions.php'); ?>
-
 <html>
     <head>
         <title>Rhythm Trainer</title>
@@ -44,3 +42,5 @@
                 <br />
             <?php } ?>
         </form>
+    </body>
+</html>

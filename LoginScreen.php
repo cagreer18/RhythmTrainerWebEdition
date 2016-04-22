@@ -10,7 +10,7 @@
     $row = mysql_fetch_array($res);
     if($row['password']==sha1($upass)) {
       $_SESSION['email'] = $row['email'];
-      echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://willshare.com/RhythmTrainerWebEdition/TrackSelect\">";
+      echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://willshare.com/RhythmTrainerWebEdition/trackSelect\">";
     } else {
 ?>
 <script> alert("Invalid username and/or password."); </script> 
@@ -34,3 +34,5 @@
                 <center><a href="http://willshare.com/RhythmTrainerWebEdition/Register">Register new account</a></center>
           </form>
        </div>
+    </body>
+</html>
