@@ -10,6 +10,7 @@ footer {
     background-color:#8038BA;
     color: #C2D5DE;
     font-size: 16pt;
+    padding: 10px;
 }
 
 /*Desktop*/
@@ -24,5 +25,6 @@ footer {
         background-color:#8038BA;
         color: #C2D5DE;
         font-size: 20pt;
+        padding: 10px;
     }
 }

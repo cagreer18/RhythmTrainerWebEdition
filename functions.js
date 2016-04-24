@@ -29,11 +29,11 @@ var rests = [];
 var userInput = [];
 var rhythmSheet = [];
 var topOfQueue;
-var bongo = new Audio("audio/Bongo.mp3");
-var shush = new Audio("audio/Shush.wav");
+
+
 var solutionTrack = [];
 var text;
-var buffer = 200;
+var buffer =150;
 var elapsed;
 var checker;
 var percentage;
@@ -70,7 +70,7 @@ var hd3 = {image: "hd3.jpg", note: [qNote, dhNote]};
 var hd4 = {image: "hd4.jpg", note: [qNote, dhNote]};
 var hd5 = {image: "hd5.jpg", note: [qNote, dhNote]};
 var hd6 = {image: "hd6.jpg", note: [dhRest, qNote]};
-var e1 = {image: "e1.jpg", array: [hNote, qNote, eNote, eNote]};
+var e1 = {image: "e1.jpg", note: [hNote, qNote, eNote, eNote]};
 var e2 = {image: "e2.jpg", note: [eNote, eNote, eNote, eNote, qNote, eNote, eNote]};
 var e3 = {image: "e3.jpg", note:[hRest, eNote, eNote, qNote]};
 var e4 = {image: "e4.jpg", note:[eNote, eNote, qNote, hRest]};
@@ -119,9 +119,6 @@ var qd3 = {image: "qd3.jpg", note: [qNote, qdNote, eNote,qNote]};
 var qd4 = {image: "qd4.jpg", note: [qNote,qNote,qdNote, eNote]};
 var qd5 = {image: "qd5.jpg", note: [dhNote,qNote]};
 var qd6 = {image: "qd6.jpg", note: [qNote, dhNote]};
-var qd7 = {image: "qd7.jpg", note: [eNote,eNote,qdNote, eNote,qNote]};
-var qd8 = {image: "qd8.jpg", note: [eNote, eNote, eNote, qNote, eNote,eNote,eNote]};
-var qd9 = {image: "qd9.jpg", note: [qNote, eNote, qNote, eNote, eNote, eNote]};
 var qd10 = {image: "qd10.jpg", note: [eNote, qNote, qNote, qdNote]};
 var qd11 = {image: "qd11.jpg", note: [qRest,qRest,qdNote,eRest]};
 var qd12 = {image: "qd12.jpg", note: [qdRest, eNote, eRest, eNote, qRest]};
@@ -148,6 +145,12 @@ var s19 = {image: "s20.jpg", note: [qNote,sNote,sNote,eNote,qNote,qNote]};
 var s20 = {image: "s21.jpg", note: [qNote,qNote,sNote,sNote,eNote,qNote]};
 var s21 = {image: "s22.jpg", note: [qNote,qNote,qNote,sNote,sNote,eNote]};
 var s22 = {image: "s16.jpg", note: [sNote,sNote,eNote,eNote,sNote,sNote,qNote,eNote,eNote]};
+var s23 = {image: "s25.jpg", note: [sNote, sNote,sNote,sNote,qNote,hRest]};
+var s24 = {image: "s27.jpg", note: [sNote,sNote,eNote,qNote,qNote,qNote]};
+var s25 = {image: "s28.jpg", note: [qNote,qRest,sNote,sNote,sNote,sNote,eNote,sNote,sNote]};
+var s26 = {image: "s30.jpg", note: [qNote,sNote,sNote,eNote,qNote,qNote]};
+var s27 = {image: "s31.jpg", note: [qNote,qNote,sNote,sNote,eNote,qNote]};
+var s28 = {image: "s32.jpg", note: [qNote,qNote,qNote,sNote,sNote,eNote]};
 var de1 = {image: "de1.jpg", note: [eNote,sNote,sNote,eNote,eNote,deNote,sNote,qNote]};
 var de2 = {image: "de2.jpg", note: [qNote,qRest,deNote,sNote,eRest,eNote]};
 var de3 = {image: "de3.jpg", note: [deNote,sNote,qNote,qNote,qNote]};
@@ -167,8 +170,8 @@ var level2 = [h1, h2, h3, h4];
 var level3 = [hd1, hd2, hd3, hd4, hd5, hd6];
 var level4 = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12];
 var level5 = [e1, e2, e3, e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14,e15,e16,e17,e18,e19,e20,e21,e22,e23,e24,e25,e26,e27,e28,e29,e30,e31,e32,e33,e34,e35,e36,e37,e38,e39,e40,e41,e42,e43];
-var level6 = [qd1,qd2,qd3,qd4,qd5,qd6,qd7,qd8,qd9,qd10,qd11,qd12,qd13];
-var level7 = [s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22];
+var level6 = [qd1,qd2,qd3,qd4,qd5,qd6,qd10,qd11,qd12,qd13];
+var level7 = [s1,s2,s3,s4,s5,s6,s7,s8,s9,s10,s11,s12,s13,s14,s15,s16,s17,s18,s19,s20,s21,s22,s23,s24,s25,s26,s27,s28];
 var level8 = [de1, de2, de3, de4, de5, de6, de7, de8, de9, de10, de11, de12, de13];
 var levels = [level1, level2, level3, level4, level5, level6, level7, level8];
 var solutionImages = [];
@@ -177,7 +180,7 @@ var solutionImages = [];
 function generateSolutionTrack() {
 
     for (var x = 0; x < 4; x++) {
-alert(localStorage.selectedLevel);
+
         var randomIndex = Math.floor(Math.random() * 10);
         if (randomIndex > 1) {
             var chosenLevel = levels[localStorage.selectedLevel - 1];
@@ -195,7 +198,8 @@ alert(localStorage.selectedLevel);
             }
             solutionImages.push(chosenMeasure["image"]);
         }
-    }
+         console.log(chosenMeasure.image);
+   }
 }
 
 // Called onload in index.php
@@ -240,13 +244,12 @@ function toggleResultPopup() {
     element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
     if(element.style.visibility === "hidden")
     {
-        location.href = 'TrackSelect.html';
+        location.href = 'TrackSelectScreen.php';
     }
 }
-
 // Used in isTrackDone() and generates a rhythm track after the solution track is determined
 function generateRhythmSheet(solutionTrack) {
-    rhythmSheet[0] = 0;
+    rhythmSheet[0] = 1000;
     for (var i = 0; i < solutionTrack.length; i++) {
         rhythmSheet[i + 1] = rhythmSheet[i] + solutionTrack[i]["duration"];
         if (solutionTrack[i].type === "rest") {
@@ -334,7 +337,7 @@ function addImages() {
 // Used at the end of start()
 function countdown() {
     document.getElementById("countdown").style.display = "block";
-    var countdownTimer = 5;
+    var countdownTimer = 3;
     var timer = setInterval(
             function () {
                 if (countdownTimer > 0) {
@@ -381,13 +384,15 @@ function appendToDiv() {
     while (currentInput >= topOfQueue - buffer) {
         if (currentInput >= (topOfQueue - buffer) && currentInput <= (topOfQueue + buffer)) {
             accurateHits++;
-            bongo.play();
+         var bongo = new Audio("audio/Bongo.wav");
+         bongo.play();
          }
         topOfQueue = notes.shift();
     }
     while (currentInput >= topOfRestQueue) {
         if (topOfRestQueue <= currentInput && currentInput < topOfRestQueue + (topOfRestQueueDuration - 200)) {
             accurateHits--;
+            var shush = new Audio("audio/Shush.wav");
             shush.play();
         }
         topOfRestQueue = rests.shift();
@@ -472,8 +477,7 @@ function populateList() {
         imgNode.setAttribute("onload","resize()");
         imgNode.setAttribute("id", i+1);
 
-        document.getElementsByTagName("footer")[0].style.position = absolute;
-        document.getElementsByTagName("footer")[0].style.bottom = 0;
+     
 
         var element = document.getElementById("trackList");
         element.appendChild(para);
