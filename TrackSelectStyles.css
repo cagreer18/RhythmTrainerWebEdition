@@ -1,9 +1,4 @@
-
 /*Phone*/
-footer {
-    position: relative;
-}
-
 .trackList{
     overflow: hidden;
     border-radius: 25px;
@@ -15,10 +10,6 @@ footer {
 
 /*Desktop*/
 @media screen and (min-width: 800px){
-    footer {
-        position: relative;
-    }
-
     .trackList{
         overflow: hidden;
         border-radius: 25px;

@@ -36,13 +36,14 @@
 			break;
 		case 'register': include('RegistrationScreen.php');
 			break;
-		case 'home': include('HomeScreen.html');
+		case 'home': 
+			include('HomeScreen.html');
+			include('footer.php');
 			break;
 		default:
 			include('HomeScreen.html');
+			include('footer.php');
 			break;
 	}
-
-	include('footer.php');
 
 ?>
