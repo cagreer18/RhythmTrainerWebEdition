@@ -626,6 +626,7 @@ function generateSolutionTrack() {
 function isTrackDone() {
   generateSolutionTrack();
   generateRhythmSheet(solutionTrack);
+  addImages();
   checker = setInterval(function() {
     if (elapsed > rhythmSheet[rhythmSheet.length - 1] + 1) {
       elapsed = 0;
@@ -662,6 +663,7 @@ function compareTracks() {
 
 // Used in isTrackDone() after the track is expected to be over and compareTracks() is finished
 function toggleResultPopup() {
+   document.getElementById("countdown").innerHTML = "Track Finished!";
   element = document.getElementById("overlay");
   element.style.visibility = (element.style.visibility === "visible") ? "hidden" : "visible";
   if (element.style.visibility === "hidden") {
@@ -687,11 +689,8 @@ function generateRhythmSheet(solutionTrack) {
 
 // Used in changeActionButtonState is called only if the game has not started  
 function start() {
-  addImages();
-  for (var i = 0; i < solutionTrack.length; i++) {
-    var element = document.getElementById("solutionTrackDisplay");
-    element.appendChild(para);
-  }
+
+  
   countdown();
 }
 
@@ -753,19 +752,25 @@ function addImages() {
   barline.setAttribute("src", "images/bar_line_final.jpg");
   barline.setAttribute("onload", "resize()");
   para.appendChild(barline);
+ for (var i = 0; i < solutionTrack.length; i++) {
+    var element = document.getElementById("solutionTrackDisplay");
+    element.appendChild(para);
+  }
 }
 
 // Used at the end of start()
 function countdown() {
   document.getElementById("countdown").style.display = "block";
-  var countdownTimer = 1;
+  var countdownTimer = 0;
   var timer = setInterval(
-    function() {
+    function() {   
+          countdownTimer++;
       if (countdownTimer < 4) {
         document.getElementById("countdown").innerHTML = countdownTimer;
-        countdownTimer++;
+    
         metronomeTrack.play();
       } else {
+        document.getElementById("countdown").innerHTML = "GO!";
         clearInterval(timer);
         playTrack();
         document.getElementById("actionButton").disabled = false;
@@ -775,7 +780,6 @@ function countdown() {
 
 // Used after the countdown is finished in countdown()
 function playTrack() {
-  document.getElementById("timestamp").innerHTML = "";
   accurateTimer();
 }
 
@@ -829,6 +833,7 @@ window.addEventListener('keydown', function(event) {
 
 // Called onclick of the 'actionButton'
 function changeActionButtonState() {
+document.getElementById("help").style.visibility = "hidden";
   if (trackEnded) {
     document.getElementById("actionButton").disabled = true;
   } else if (!trackStarted) {
@@ -839,6 +844,7 @@ function changeActionButtonState() {
   } else if (trackStarted) {
     appendToDiv();
   }
+
 }
 
 

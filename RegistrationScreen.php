@@ -6,10 +6,13 @@ if(isset($_POST['btn-signup'])) {
 	$upass = sha1(mysql_real_escape_string($_POST['password']));
 	if(mysql_query("INSERT INTO User(email,password) VALUES('$email','$upass')")) {
 ?>
-<script> alert('successfully registered ');
+<script> alert('Successfully registered. Now, please login.');
+
 </script>
-<?php } else { ?>
-<script> alert('error while registering you...');
+<?php
+ echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://willshare.com/RhythmTrainerWebEdition/login\">";
+ } else { ?>
+<script> alert('There was an error with the credentials you entered. Please try again.');
 </script>
 <?php 
 	}

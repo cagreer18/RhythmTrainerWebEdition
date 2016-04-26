@@ -41,6 +41,12 @@ body {
     overflow: auto;
     background-color: #8038BA;
     text-align: center;
+   
+}
+#help{
+ font-size: 18pt;
+    color:white;
+vertical-align: middle;
 }
 
 #wrap {

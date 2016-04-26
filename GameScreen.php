@@ -13,6 +13,7 @@
         </div>
         <div id="wrap">
             <div id="timestamp">
+                <span id = "help" >Tap along in time with the music! Press the button below to begin. To tap along with the music, you may either click the button below, or tap the space bar. </span>
                 <div id="countdown">
                 </div>
             </div>
