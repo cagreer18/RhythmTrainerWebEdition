@@ -10,7 +10,7 @@ if(isset($_POST['btn-signup'])) {
 
 </script>
 <?php
- echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://willshare.com/RhythmTrainerWebEdition/login\">";
+ echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://willshare.com/RhythmTrainer/login\">";
  } else { ?>
 <script> alert('There was an error with the credentials you entered. Please try again.');
 </script>
@@ -50,7 +50,7 @@ if(isset($_POST['btn-signup'])) {
 						</tr>
 						<tr>
 							<td>
-								<a href="http://willshare.com/RhythmTrainerWebEdition/Login">Login</a>
+								<a href="http://willshare.com/RhythmTrainer/Login">Login</a>
 							</td>
 						</tr>
 					</table>
