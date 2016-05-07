@@ -28,7 +28,7 @@ if(isset($_POST['btn-signup'])) {
 			Login & Registration System
 		</title>
 	</head>
-	<body>
+	<body link="yellow" vlink="yellow">
 		<center>
 			<div id="login-form">
 				<form method="post">

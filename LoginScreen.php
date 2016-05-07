@@ -25,7 +25,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="LoginScreenStyles.css?<?php echo date('l jS \of F Y h:i:s A'); ?>">
     </head>
-    <body>
+    <body link="yellow" vlink="yellow">
         <div>
             <form method="post" action="http://willshare.com/RhythmTrainer/Login">
                 <input name="email" class="inputfield" type="text" placeholder="Email">
